@@ -28,6 +28,7 @@ platformdirs==3.5.0
 psycopg2-binary==2.9.9
 pycodestyle==2.10.0
 PyJWT==2.8.0
+pyotp==2.9.0
 pyrsistent==0.19.3
 python-decouple==3.8
 python-dotenv==1.0.0
@@ -41,3 +42,4 @@ typing_extensions==4.12.2
 uritemplate==4.1.1
 urllib3==2.2.2
 gunicorn==22.0.0
+whitenoise==6.5.0
