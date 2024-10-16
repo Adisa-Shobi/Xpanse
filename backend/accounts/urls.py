@@ -9,12 +9,12 @@ urlpatterns = [
         name="Register"
     ),
     path(
-       "resend-otp",
+       "resend-otp/",
         views.ResendOTPView.as_view(),
         name="resend-otp"
     ),
     path(
-        "verify",
+        "verify/",
         views.VerifyAccountView.as_view(),
         name="verify-account"
     )
