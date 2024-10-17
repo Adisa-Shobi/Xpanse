@@ -91,13 +91,33 @@ WSGI_APPLICATION = "Xpanse_backend.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
+DEV_DATABASE = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": BASE_DIR / "db.sqlite3",
     }
 }
 
+PROD_DATABASE = {
+    'default': {
+
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+
+        'NAME': config("DATABASE_NAME"),
+
+        'USER': config("DATABASE_USER"),
+
+        'PASSWORD': config("DATABASE_PASSWORD"),
+
+        'HOST': config("DATABASE_HOST"),
+
+        'PORT': config("DATABASE_PORT"),
+
+    }
+}
+
+
+DATABASES = PROD_DATABASE if not DEBUG else DEV_DATABASE
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
