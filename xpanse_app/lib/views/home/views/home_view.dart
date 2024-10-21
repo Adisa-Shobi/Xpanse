@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:xpanse_app/utils/colors.dart';
 import 'package:xpanse_app/utils/responsive.dart';
@@ -15,10 +14,14 @@ class HomeView extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: Spacing.m),
         child: Column(
           children: [
-            Spacing.vertical(Spacing.s),
+            Spacing.vertical(Spacing.l),
             _getHeading(),
             Spacing.vertical(Spacing.s),
             _buildBudgetSection(context),
+            Spacing.vertical(Spacing.l),
+            Expanded(
+              child: _buildExpenses(context),
+            ),
           ],
         ));
   }
@@ -70,6 +73,7 @@ class HomeView extends StatelessWidget {
             )
           ],
         ),
+        Spacing.vertical(Spacing.m),
         Flex(
           direction: Axis.vertical,
           mainAxisSize: MainAxisSize.max,
@@ -109,6 +113,70 @@ class HomeView extends StatelessWidget {
           ],
         )
       ],
+    );
+  }
+}
+
+Widget _buildExpenses(BuildContext context) {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text(
+        'Recent Expenses',
+        textAlign: TextAlign.start,
+        style: AppTypography.heading2(),
+      ),
+      Spacing.vertical(Spacing.s),
+      Expanded(
+        child: ListView.builder(
+          itemBuilder: (context, index) {
+            return const ExpenseItem();
+          },
+          itemCount: 10,
+        ),
+      ),
+    ],
+  );
+}
+
+class ExpenseItem extends StatelessWidget {
+  const ExpenseItem({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Flex(
+              direction: Axis.horizontal,
+              children: [
+                //Icon here
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Expense Name', style: AppTypography.heading2()),
+                    Text(
+                      '3 minutes ago',
+                      style: AppTypography.caption().copyWith(
+                        fontSize: 10,
+                      ),
+                    )
+                  ],
+                )
+              ],
+            ),
+            Text(
+              'Rwf 10,000',
+              style: AppTypography.heading2()
+                  .copyWith(fontSize: 14, fontWeight: FontWeight.normal),
+            )
+          ],
+        ),
+      ),
     );
   }
 }

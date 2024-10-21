@@ -31,15 +31,21 @@ class HomePage extends StatelessWidget {
                 onTap: controller.changeIndex,
                 items: const [
                   BottomNavigationBarItem(
-                    icon: Icon(Icons.home),
+                    icon: Icon(
+                      Icons.home,
+                    ),
                     label: 'Home',
                   ),
                   BottomNavigationBarItem(
-                    icon: Icon(Icons.add),
+                    icon: Icon(
+                      Icons.add,
+                    ),
                     label: 'Expenses',
                   ),
                   BottomNavigationBarItem(
-                    icon: Icon(Icons.person),
+                    icon: Icon(
+                      Icons.person,
+                    ),
                     label: 'Profile',
                   ),
                 ],
