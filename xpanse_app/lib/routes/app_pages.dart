@@ -1,7 +1,8 @@
 import 'package:get/get.dart';
+import 'package:xpanse_app/bindings/bindings.dart';
 import 'package:xpanse_app/views/auth/login.dart';
 import 'package:xpanse_app/views/auth/signup.dart';
-import 'package:xpanse_app/views/home.dart';
+import 'package:xpanse_app/views/home/home.dart';
 import 'package:xpanse_app/views/onboarding/onboarding.dart';
 import 'route_names.dart';
 // Import your page components and bindings here
@@ -11,7 +12,7 @@ class AppPages {
     GetPage(
       name: RouteNames.home,
       page: () => HomePage(),
-      // binding: HomeBinding(),
+      binding: HomeBindings(),
     ),
     GetPage(
       name: RouteNames.login,
