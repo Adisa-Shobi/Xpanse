@@ -15,6 +15,12 @@ class AppTypography {
         color: color,
       );
 
+  static TextStyle heading3({Color? color}) => _baseStyle.copyWith(
+        fontSize: 18,
+        fontWeight: FontWeight.w600,
+        color: color,
+      );
+
   static TextStyle bodyText({Color? color}) => _baseStyle.copyWith(
         fontSize: 16,
         color: color,
