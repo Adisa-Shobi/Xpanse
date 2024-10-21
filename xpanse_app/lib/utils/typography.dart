@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AppTypography {
-  static TextStyle _baseStyle = TextStyle(fontFamily: 'Roboto');
+  static TextStyle _baseStyle = TextStyle(fontFamily: 'Montserrat');
 
   static TextStyle heading1({Color? color}) => _baseStyle.copyWith(
         fontSize: 24,
