@@ -1,34 +1,57 @@
 import 'package:flutter/material.dart';
+import 'colors.dart';
 
 class AppTypography {
-  static TextStyle _baseStyle = TextStyle(fontFamily: 'Montserrat');
+  // Base style that other styles will inherit from
+  static const TextStyle _baseStyle = TextStyle(
+    fontFamily: 'Montserrat',
+    color: AppColors.text,  // Using your custom text color (040404)
+  );
 
-  static TextStyle heading1({Color? color}) => _baseStyle.copyWith(
-        fontSize: 24,
-        fontWeight: FontWeight.bold,
-        color: color,
-      );
+  // Headings
+  static TextStyle h1 = _baseStyle.copyWith(
+    fontSize: 32,
+    fontWeight: FontWeight.bold,
+  );
 
-  static TextStyle heading2({Color? color}) => _baseStyle.copyWith(
-        fontSize: 20,
-        fontWeight: FontWeight.w600,
-        color: color,
-      );
+  static TextStyle h2 = _baseStyle.copyWith(
+    fontSize: 24,
+    fontWeight: FontWeight.bold,
+  );
 
-  static TextStyle heading3({Color? color}) => _baseStyle.copyWith(
-        fontSize: 18,
-        fontWeight: FontWeight.w600,
-        color: color,
-      );
+  static TextStyle h3 = _baseStyle.copyWith(
+    fontSize: 20,
+    fontWeight: FontWeight.w600,
+  );
 
-  static TextStyle bodyText({Color? color}) => _baseStyle.copyWith(
-        fontSize: 16,
-        color: color,
-      );
+  // Body text
+  static TextStyle bodyLarge = _baseStyle.copyWith(
+    fontSize: 16,
+    fontWeight: FontWeight.normal,
+  );
 
-  static TextStyle caption({Color? color}) => _baseStyle.copyWith(
-        fontSize: 14,
-        fontStyle: FontStyle.italic,
-        color: color,
-      );
+  static TextStyle bodyMedium = _baseStyle.copyWith(
+    fontSize: 14,
+    fontWeight: FontWeight.normal,
+  );
+
+  static TextStyle bodySmall = _baseStyle.copyWith(
+    fontSize: 12,
+    fontWeight: FontWeight.normal,
+  );
+
+  // Button text
+  static TextStyle button = _baseStyle.copyWith(
+    fontSize: 14,
+    fontWeight: FontWeight.w600,
+    letterSpacing: 0.5,
+  );
+
+  // Caption text
+  static TextStyle caption = _baseStyle.copyWith(
+    fontSize: 12,
+    fontWeight: FontWeight.w400,
+    letterSpacing: 0.2,
+  );
+ 
 }
