@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import '../../auth/signup.dart';
 import '../../auth/login.dart';
@@ -60,3 +61,18 @@ class ProfileView extends StatelessWidget {
     Navigator.of(context).push(MaterialPageRoute(builder: (context) => page));
   }
 }
+
+import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
+
+class ProfileView extends StatelessWidget {
+  const ProfileView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(
+      child: Text('Profile Page RR'),
+    ); // Write code here @Ronald
+  }
+}
+
