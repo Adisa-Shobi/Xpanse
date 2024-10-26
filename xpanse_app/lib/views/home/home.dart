@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:xpanse_app/controllers/home_controller.dart';
+import 'package:xpanse_app/views/home/views/expense_view.dart';
 import 'package:xpanse_app/views/home/views/home_view.dart';
 import 'package:xpanse_app/views/home/views/profile_view.dart';
 
@@ -9,11 +10,7 @@ class HomePage extends StatelessWidget {
 
   static List<Widget> homePageViews = [
     HomeView(),
-    Container(
-      child: Center(
-        child: Text('Expenses Page'),
-      ),
-    ),
+    ExpensesView(),
     ProfileView(),
   ];
 
