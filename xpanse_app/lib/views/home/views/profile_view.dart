@@ -3,7 +3,7 @@ import '../../auth/signup.dart';
 import '../../auth/login.dart';
 
 class ProfileView extends StatelessWidget {
-  const ProfileView({Key? key}) : super(key: key);
+  const ProfileView({super.key});
 
   @override
   Widget build(BuildContext context) {
