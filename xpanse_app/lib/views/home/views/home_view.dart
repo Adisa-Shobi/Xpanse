@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:xpanse_app/components/image_icon.dart';
 import 'package:xpanse_app/utils/colors.dart';
 import 'package:xpanse_app/utils/responsive.dart';
 import 'package:xpanse_app/utils/spcaing.dart';
@@ -16,7 +17,7 @@ class HomeView extends StatelessWidget {
           children: [
             Spacing.vertical(Spacing.l),
             _getHeading(),
-            Spacing.vertical(Spacing.s),
+            Spacing.vertical(Spacing.m),
             _buildBudgetSection(context),
             Spacing.vertical(Spacing.l),
             Expanded(
@@ -30,19 +31,47 @@ class HomeView extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        // Image.network(
-        //   'https://via',
-        //   width: 50,
-        //   height: 50,
-        //   fit: BoxFit.cover,
-        // ),
-        Spacing.horizontal(
-          Spacing.s,
+        Container(
+          width: 40,
+          height: 40,
+          decoration: const BoxDecoration(
+            shape: BoxShape.circle,
+            color: const Color(0xFFE8F5E9), // Light green background
+          ),
+          child: ClipOval(
+            child: Image.network(
+              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSY2r1g-oKe7WxMwyuhsS5reYmvZ8l5fABcsg&s',
+              fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) {
+                // Fallback to icon if image fails to load
+                return Center(
+                  child: Icon(
+                    Icons.person,
+                    color: Colors.grey[600],
+                    size: 24,
+                  ),
+                );
+              },
+              loadingBuilder: (context, child, loadingProgress) {
+                if (loadingProgress == null) return child;
+                // Show loading indicator while image loads
+                return Center(
+                  child: CircularProgressIndicator(
+                    value: loadingProgress.expectedTotalBytes != null
+                        ? loadingProgress.cumulativeBytesLoaded /
+                            loadingProgress.expectedTotalBytes!
+                        : null,
+                  ),
+                );
+              },
+            ),
+          ),
         ),
+        Spacing.horizontal(Spacing.l),
         Text(
-          'Good Morning, User', // Replace with user name
-          style: AppTypography.heading1(),
-        )
+          'Good morning Ademola',
+          style: AppTypography.h3,
+        ),
       ],
     );
   }
@@ -57,12 +86,26 @@ class HomeView extends StatelessWidget {
           children: [
             Row(
               children: [
-                // Icon
+                const CustomIcon(
+                  imagePath: "assets/images/target.png",
+                  size: 40,
+                ),
+                Spacing.horizontal(Spacing.s),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text('Targeted Budget', style: AppTypography.caption()),
-                    Text('Rwf 800,000', style: AppTypography.heading2())
+                    Text(
+                      'Targeted Budget',
+                      style: AppTypography.bodyLarge,
+                    ),
+                    Spacing.vertical(Spacing.xs),
+                    Text(
+                      'Rwf 800,000',
+                      style: AppTypography.h1.copyWith(
+                        height: 1,
+                      ),
+                    )
                   ],
                 )
               ],
@@ -89,11 +132,14 @@ class HomeView extends StatelessWidget {
                 children: [
                   Text(
                     'This Motnh\'s Budget',
-                    style: AppTypography.bodyText(),
+                    style: AppTypography.bodyLarge.copyWith(
+                      // color: Colors.black,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                   Text(
                     'Rwf 300,000 of Rwf 800,000',
-                    style: AppTypography.caption().copyWith(
+                    style: AppTypography.bodySmall.copyWith(
                       fontSize: 10,
                     ),
                   ),
@@ -124,7 +170,7 @@ Widget _buildExpenses(BuildContext context) {
       Text(
         'Recent Expenses',
         textAlign: TextAlign.start,
-        style: AppTypography.heading2(),
+        style: AppTypography.h3,
       ),
       Spacing.vertical(Spacing.s),
       Expanded(
@@ -158,10 +204,10 @@ class ExpenseItem extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Expense Name', style: AppTypography.heading2()),
+                    Text('Expense Name', style: AppTypography.bodyLarge),
                     Text(
                       '3 minutes ago',
-                      style: AppTypography.caption().copyWith(
+                      style: AppTypography.bodyLarge.copyWith(
                         fontSize: 10,
                       ),
                     )
@@ -171,7 +217,7 @@ class ExpenseItem extends StatelessWidget {
             ),
             Text(
               'Rwf 10,000',
-              style: AppTypography.heading2()
+              style: AppTypography.bodyMedium
                   .copyWith(fontSize: 14, fontWeight: FontWeight.normal),
             )
           ],
