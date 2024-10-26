@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import '../../auth/signup.dart';
 import '../../auth/login.dart';
@@ -21,13 +20,13 @@ class ProfileView extends StatelessWidget {
             _buildButton(
               context: context,
               text: 'Go to Sign Up',
-              onPressed: () => _navigateTo(context,  SignUpPage()),
+              onPressed: () => _navigateTo(context, SignUpPage()),
             ),
             const SizedBox(height: 20),
             _buildButton(
               context: context,
               text: 'Go to Login',
-              onPressed: () => _navigateTo(context,  LoginPage()),
+              onPressed: () => _navigateTo(context, LoginPage()),
             ),
           ],
         ),
@@ -62,17 +61,17 @@ class ProfileView extends StatelessWidget {
   }
 }
 
-import 'package:flutter/foundation.dart';
-import 'package:flutter/widgets.dart';
+// import 'package:flutter/foundation.dart';
+// import 'package:flutter/widgets.dart';
 
-class ProfileView extends StatelessWidget {
-  const ProfileView({super.key});
+// class ProfileView extends StatelessWidget {
+//   const ProfileView({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: Text('Profile Page RR'),
-    ); // Write code here @Ronald
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return const Center(
+//       child: Text('Profile Page RR'),
+//     ); // Write code here @Ronald
+//   }
+// }
 
