@@ -303,7 +303,7 @@ class ExpensesView extends StatelessWidget {
           Text(
             title,
             style: const TextStyle(
-              fontSize: 16,
+              fontSize: 8,
               fontWeight: FontWeight.w500,
             ),
           ),
@@ -311,7 +311,7 @@ class ExpensesView extends StatelessWidget {
           Text(
             amount,
             style: const TextStyle(
-              fontSize: 14,
+              fontSize: 8,
               color: Colors.grey,
             ),
           ),
