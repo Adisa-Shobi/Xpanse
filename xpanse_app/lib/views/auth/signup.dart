@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:xpanse_app/routes/route_names.dart';
 import 'login.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -149,7 +151,11 @@ class _SignUpPageState extends State<SignUpPage> {
             ),
             SizedBox(height: 32),
             ElevatedButton(
-              onPressed: _agreeToTerms ? () {} : null,
+              onPressed: _agreeToTerms
+                  ? () {
+                      Get.offAllNamed(RouteNames.home);
+                    }
+                  : null,
               child: Text(
                 'Sign up',
                 style: TextStyle(
@@ -221,10 +227,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (context) => LoginPage()),
-                    );
+                    Get.offAndToNamed(RouteNames.login);
                   },
                   child: Text(
                     'Login',
