@@ -44,7 +44,6 @@ class AppTypography {
   static TextStyle button = _baseStyle.copyWith(
     fontSize: 14,
     fontWeight: FontWeight.w600,
-    letterSpacing: 0.5,
   );
 
   // Caption text
