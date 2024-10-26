@@ -24,7 +24,7 @@ class ExpensesView extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: _buildBottomNavBar(),
+      // bottomNavigationBar: _buildBottomNavBar(),
     );
   }
 
