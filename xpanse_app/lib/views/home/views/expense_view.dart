@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:xpanse_app/utils/colors.dart';
 import 'package:xpanse_app/utils/spcaing.dart';
+import 'package:xpanse_app/utils/typography.dart';
+import 'package:xpanse_app/views/home/views/home_view.dart';
 // import 'package:xpanse_app/utils/spacing.dart';
 
 class ExpensesView extends StatelessWidget {
@@ -15,7 +18,7 @@ class ExpensesView extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Spacing.vertical(Spacing.l),
-              _buildHeader(),
+              getHeading(title: 'Expenses Overview'),
               const SizedBox(height: 24),
               _buildBudgetCards(),
               const SizedBox(height: 24),
@@ -26,29 +29,6 @@ class ExpensesView extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-
-  Widget _buildHeader() {
-    return Row(
-      children: [
-        Container(
-          width: 40,
-          height: 40,
-          decoration: const BoxDecoration(
-            shape: BoxShape.circle,
-            color: Color(0xFFE8F5E9),
-          ),
-        ),
-        const SizedBox(width: 12),
-        const Text(
-          'Expenses Overview',
-          style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ],
     );
   }
 
@@ -64,21 +44,18 @@ class ExpensesView extends StatelessWidget {
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
+              children: [
                 Text(
                   'This Month Budget',
-                  style: TextStyle(
+                  style: AppTypography.bodyMedium.copyWith(
                     color: Colors.white,
-                    fontSize: 16,
                   ),
                 ),
-                SizedBox(height: 8),
+                Spacing.vertical(Spacing.xs),
                 Text(
                   'Rwf 800,000',
-                  style: TextStyle(
+                  style: AppTypography.h3.copyWith(
                     color: Colors.white,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ],
@@ -95,21 +72,18 @@ class ExpensesView extends StatelessWidget {
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
+              children: [
                 Text(
                   'Available Balance',
-                  style: TextStyle(
+                  style: AppTypography.bodyMedium.copyWith(
                     color: Colors.white,
-                    fontSize: 16,
                   ),
                 ),
-                SizedBox(height: 8),
+                Spacing.vertical(Spacing.xs),
                 Text(
                   'Rwf 800,000',
-                  style: TextStyle(
+                  style: AppTypography.h3.copyWith(
                     color: Colors.white,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ],
@@ -127,77 +101,119 @@ class ExpensesView extends StatelessWidget {
         color: Colors.grey[100],
         borderRadius: BorderRadius.circular(16),
       ),
-      child: Column(
+      child: Row(
+        // Main Row to put expenses and chart side by side
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          // Left side - Expenses list
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(),
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey[300]!),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Row(
-                  children: const [
-                    Text(
-                      'June',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
+              _buildExpenseItem('Home', 4.6),
+              _buildExpenseItem('Home', 4.6),
+              _buildExpenseItem('Home', 4.6),
+              _buildExpenseItem('Home', 4.6),
+            ],
+          ),
+
+          // Right side - Circular chart with month selector
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // Custom circular progress indicator
+              SizedBox(
+                width: 120, // Adjust size as needed
+                height: 120,
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    // Circular progress indicators
+                    SizedBox(
+                      width: 100,
+                      height: 100,
+                      child: CircularProgressIndicator(
+                        value: 0.7, // Adjust value as needed
+                        strokeWidth: 8,
+                        backgroundColor: Colors.grey[300],
+                        color: Colors.green, // Primary color
                       ),
                     ),
-                    SizedBox(width: 8),
-                    Icon(Icons.keyboard_arrow_down),
+                    const SizedBox(
+                      width: 100,
+                      height: 100,
+                      child: CircularProgressIndicator(
+                        value: 0.3, // Adjust value as needed
+                        strokeWidth: 8,
+                        backgroundColor: Colors.transparent,
+                        color: Colors.orange, // Secondary color
+                      ),
+                    ),
+                    // Month selector in center
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 6,
+                      ),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey[300]!),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            'June',
+                            style: AppTypography.bodyLarge,
+                          ),
+                          Spacing.horizontal(Spacing.xs),
+                          const Icon(
+                            Icons.keyboard_arrow_down,
+                            size: 16,
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 16),
-          _buildExpenseItem('Home', 4.6),
-          _buildExpenseItem('Home', 4.6),
-          _buildExpenseItem('Home', 4.6),
-          _buildExpenseItem('Home', 4.6),
         ],
       ),
     );
   }
 
-  Widget _buildExpenseItem(String title, double percentage) {
+  Widget _buildExpenseItem(String category, double amount) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8),
+      padding: const EdgeInsets.symmetric(vertical: 4),
       child: Row(
         children: [
           Container(
-            padding: const EdgeInsets.all(8),
+            padding: const EdgeInsets.all(2),
             decoration: BoxDecoration(
-              color: const Color(0xFF6B21A8).withOpacity(0.1),
-              borderRadius: BorderRadius.circular(8),
+              // color: AppColors.primary.withOpacity(0.1),
+              border: Border.all(
+                color: AppColors.primary,
+              ),
+              borderRadius: BorderRadius.circular(5),
             ),
             child: const Icon(
               Icons.home,
-              color: Color(0xFF6B21A8),
-              size: 20,
+              color: AppColors.primary,
+              size: 12,
             ),
           ),
-          const SizedBox(width: 12),
+          Spacing.horizontal(Spacing.xs),
           Text(
-            title,
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
+            category,
+            style: AppTypography.bodyLarge.copyWith(
+              fontWeight: FontWeight.w400,
             ),
           ),
-          const Spacer(),
+          const SizedBox(width: 8),
           Text(
-            '${percentage}%',
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
-            ),
+            '${amount.toStringAsFixed(1)}%',
+            style: AppTypography.bodyLarge,
           ),
         ],
       ),
@@ -211,29 +227,33 @@ class ExpensesView extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text(
+            Text(
               'Set Expenses',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
+              style: AppTypography.h3,
             ),
             TextButton.icon(
               onPressed: () {},
-              icon: const Icon(Icons.add_circle_outline),
-              label: const Text('New Category'),
+              icon: const Icon(
+                Icons.add_circle_outline,
+              ),
+              label: Text(
+                'New Category',
+                style: AppTypography.bodyLarge.copyWith(
+                  color: AppColors.primary,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
               style: TextButton.styleFrom(
                 foregroundColor: const Color(0xFF6B21A8),
               ),
             ),
           ],
         ),
-        const SizedBox(height: 8),
-        const Text(
+        Spacing.vertical(Spacing.s),
+        Text(
           'Tap on the icon to set budget amount',
-          style: TextStyle(
+          style: AppTypography.caption.copyWith(
             color: Colors.grey,
-            fontSize: 14,
           ),
         ),
         const SizedBox(height: 16),
