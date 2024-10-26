@@ -69,15 +69,9 @@ class HomeView extends StatelessWidget {
         ),
         Spacing.horizontal(Spacing.l),
         Text(
-
-          'Good Morning, User', // Replace with user name
-          style: AppTypography.h1, // Changed from heading1 to headline1
-        )
-
           'Good morning Ademola',
           style: AppTypography.h3,
         ),
-
       ],
     );
   }
@@ -101,8 +95,6 @@ class HomeView extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text('Targeted Budget', style: AppTypography.caption),
-                    Text('Rwf 800,000', style: AppTypography.h2)
                     Text(
                       'Targeted Budget',
                       style: AppTypography.bodyLarge,
@@ -140,13 +132,6 @@ class HomeView extends StatelessWidget {
                 children: [
                   Text(
                     'This Motnh\'s Budget',
-
-                    style: AppTypography.bodyLarge,
-                  ),
-                  Text(
-                    'Rwf 300,000 of Rwf 800,000',
-                    style: AppTypography.caption.copyWith(
-
                     style: AppTypography.bodyLarge.copyWith(
                       // color: Colors.black,
                       fontWeight: FontWeight.w600,
@@ -155,7 +140,6 @@ class HomeView extends StatelessWidget {
                   Text(
                     'Rwf 300,000 of Rwf 800,000',
                     style: AppTypography.bodySmall.copyWith(
-
                       fontSize: 10,
                     ),
                   ),
@@ -186,11 +170,7 @@ Widget _buildExpenses(BuildContext context) {
       Text(
         'Recent Expenses',
         textAlign: TextAlign.start,
-
-        style: AppTypography.h2,
-=======
         style: AppTypography.h3,
-
       ),
       Spacing.vertical(Spacing.s),
       Expanded(
@@ -224,10 +204,6 @@ class ExpenseItem extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Expense Name', style: AppTypography.h2),
-                    Text(
-                      '3 minutes ago',
-                      style: AppTypography.caption.copyWith(
                     Text('Expense Name', style: AppTypography.bodyLarge),
                     Text(
                       '3 minutes ago',
@@ -241,7 +217,6 @@ class ExpenseItem extends StatelessWidget {
             ),
             Text(
               'Rwf 10,000',
-              style: AppTypography.h2
               style: AppTypography.bodyMedium
                   .copyWith(fontSize: 14, fontWeight: FontWeight.normal),
             )
