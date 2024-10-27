@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:xpanse_app/routes/route_names.dart';
 import 'package:xpanse_app/utils/colors.dart';
 import 'signup.dart';
 import '../../utils/typography.dart';
@@ -72,7 +74,7 @@ class _LoginPageState extends State<LoginPage> {
             SizedBox(height: 32),
             ElevatedButton(
               onPressed: () {
-                // Handle login
+                Get.offAllNamed(RouteNames.home);
               },
               child: Text(
                 'Login',
