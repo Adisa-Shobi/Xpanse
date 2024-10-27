@@ -16,7 +16,9 @@ class HomeView extends StatelessWidget {
         child: Column(
           children: [
             Spacing.vertical(Spacing.l),
-            _getHeading(),
+            getHeading(
+              title: 'Good morning Ademola',
+            ),
             Spacing.vertical(Spacing.m),
             _buildBudgetSection(context),
             Spacing.vertical(Spacing.l),
@@ -25,61 +27,6 @@ class HomeView extends StatelessWidget {
             ),
           ],
         ));
-  }
-
-  _getHeading() {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Container(
-          width: 40,
-          height: 40,
-          decoration: const BoxDecoration(
-            shape: BoxShape.circle,
-            color: const Color(0xFFE8F5E9), // Light green background
-          ),
-          child: ClipOval(
-            child: Image.network(
-              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSY2r1g-oKe7WxMwyuhsS5reYmvZ8l5fABcsg&s',
-              fit: BoxFit.cover,
-              errorBuilder: (context, error, stackTrace) {
-                // Fallback to icon if image fails to load
-                return Center(
-                  child: Icon(
-                    Icons.person,
-                    color: Colors.grey[600],
-                    size: 24,
-                  ),
-                );
-              },
-              loadingBuilder: (context, child, loadingProgress) {
-                if (loadingProgress == null) return child;
-                // Show loading indicator while image loads
-                return Center(
-                  child: CircularProgressIndicator(
-                    value: loadingProgress.expectedTotalBytes != null
-                        ? loadingProgress.cumulativeBytesLoaded /
-                            loadingProgress.expectedTotalBytes!
-                        : null,
-                  ),
-                );
-              },
-            ),
-          ),
-        ),
-        Spacing.horizontal(Spacing.l),
-        Text(
-
-          'Good Morning, User', // Replace with user name
-          style: AppTypography.h1, // Changed from heading1 to headline1
-        )
-
-          'Good morning Ademola',
-          style: AppTypography.h3,
-        ),
-
-      ],
-    );
   }
 
   _buildBudgetSection(BuildContext context) {
@@ -101,8 +48,6 @@ class HomeView extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text('Targeted Budget', style: AppTypography.caption),
-                    Text('Rwf 800,000', style: AppTypography.h2)
                     Text(
                       'Targeted Budget',
                       style: AppTypography.bodyLarge,
@@ -140,13 +85,6 @@ class HomeView extends StatelessWidget {
                 children: [
                   Text(
                     'This Motnh\'s Budget',
-
-                    style: AppTypography.bodyLarge,
-                  ),
-                  Text(
-                    'Rwf 300,000 of Rwf 800,000',
-                    style: AppTypography.caption.copyWith(
-
                     style: AppTypography.bodyLarge.copyWith(
                       // color: Colors.black,
                       fontWeight: FontWeight.w600,
@@ -155,7 +93,6 @@ class HomeView extends StatelessWidget {
                   Text(
                     'Rwf 300,000 of Rwf 800,000',
                     style: AppTypography.bodySmall.copyWith(
-
                       fontSize: 10,
                     ),
                   ),
@@ -186,11 +123,7 @@ Widget _buildExpenses(BuildContext context) {
       Text(
         'Recent Expenses',
         textAlign: TextAlign.start,
-
-        style: AppTypography.h2,
-=======
         style: AppTypography.h3,
-
       ),
       Spacing.vertical(Spacing.s),
       Expanded(
@@ -200,6 +133,55 @@ Widget _buildExpenses(BuildContext context) {
           },
           itemCount: 10,
         ),
+      ),
+    ],
+  );
+}
+
+getHeading({title}) {
+  return Row(
+    crossAxisAlignment: CrossAxisAlignment.center,
+    children: [
+      Container(
+        width: 40,
+        height: 40,
+        decoration: const BoxDecoration(
+          shape: BoxShape.circle,
+          color: const Color(0xFFE8F5E9), // Light green background
+        ),
+        child: ClipOval(
+          child: Image.network(
+            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSY2r1g-oKe7WxMwyuhsS5reYmvZ8l5fABcsg&s',
+            fit: BoxFit.cover,
+            errorBuilder: (context, error, stackTrace) {
+              // Fallback to icon if image fails to load
+              return Center(
+                child: Icon(
+                  Icons.person,
+                  color: Colors.grey[600],
+                  size: 24,
+                ),
+              );
+            },
+            loadingBuilder: (context, child, loadingProgress) {
+              if (loadingProgress == null) return child;
+              // Show loading indicator while image loads
+              return Center(
+                child: CircularProgressIndicator(
+                  value: loadingProgress.expectedTotalBytes != null
+                      ? loadingProgress.cumulativeBytesLoaded /
+                          loadingProgress.expectedTotalBytes!
+                      : null,
+                ),
+              );
+            },
+          ),
+        ),
+      ),
+      Spacing.horizontal(Spacing.l),
+      Text(
+        title,
+        style: AppTypography.h3,
       ),
     ],
   );
@@ -220,14 +202,37 @@ class ExpenseItem extends StatelessWidget {
             Flex(
               direction: Axis.horizontal,
               children: [
-                //Icon here
+                Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: AppColors.primary.withOpacity(0.2),
+                  ),
+                  child: ClipOval(
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Image.asset(
+                        'assets/images/exp-arrow.png',
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) {
+                          // Fallback to icon if image fails to load
+                          return Center(
+                            child: Icon(
+                              Icons.person,
+                              color: Colors.grey[600],
+                              size: 24,
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+                Spacing.horizontal(Spacing.s),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Expense Name', style: AppTypography.h2),
-                    Text(
-                      '3 minutes ago',
-                      style: AppTypography.caption.copyWith(
                     Text('Expense Name', style: AppTypography.bodyLarge),
                     Text(
                       '3 minutes ago',
@@ -241,7 +246,6 @@ class ExpenseItem extends StatelessWidget {
             ),
             Text(
               'Rwf 10,000',
-              style: AppTypography.h2
               style: AppTypography.bodyMedium
                   .copyWith(fontSize: 14, fontWeight: FontWeight.normal),
             )

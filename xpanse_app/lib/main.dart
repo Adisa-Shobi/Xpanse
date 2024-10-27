@@ -7,7 +7,7 @@ import 'utils/theme.dart';
 import 'controllers/auth_controller.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Xpanse',
       theme: AppTheme.lightTheme,
-      initialRoute: RouteNames.home,
+      initialRoute: RouteNames.onboarding1,
       getPages: AppPages.routes,
       initialBinding: BindingsBuilder(() {
         Get.put(AuthController());

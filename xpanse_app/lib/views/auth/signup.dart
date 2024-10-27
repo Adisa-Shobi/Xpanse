@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:xpanse_app/routes/route_names.dart';
+import 'package:xpanse_app/utils/colors.dart';
+import 'package:xpanse_app/utils/typography.dart';
 import 'login.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -42,18 +46,15 @@ class _SignUpPageState extends State<SignUpPage> {
           children: [
             Text(
               'Sign Up',
-              style: TextStyle(
-                fontSize: 32,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
+              style: AppTypography.h1.copyWith(
+                color: AppColors.primary,
               ),
             ),
             SizedBox(height: 8),
             Text(
               'Create account and enjoy all services',
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.grey[500],
+              style: AppTypography.bodyLarge.copyWith(
+                color: AppColors.primary,
               ),
             ),
             SizedBox(height: 32),
@@ -125,21 +126,25 @@ class _SignUpPageState extends State<SignUpPage> {
                     text: TextSpan(
                       style: TextStyle(color: Colors.grey[600], fontSize: 14),
                       children: [
-                        TextSpan(text: 'I agree to the company '),
+                        TextSpan(
+                            text: 'I agree to the company ',
+                            style: AppTypography.bodyMedium.copyWith()),
                         TextSpan(
                           text: 'Term of Service',
-                          style: TextStyle(
-                            color: Color(0xFF4A148C),
-                            fontWeight: FontWeight.w600,
+                          style: AppTypography.bodyMedium.copyWith(
+                            color: AppColors.primary,
                           ),
                         ),
                         TextSpan(text: ' and '),
                         TextSpan(
                           text: 'Privacy Policy',
-                          style: TextStyle(
-                            color: Color(0xFF4A148C),
-                            fontWeight: FontWeight.w600,
+                          style: AppTypography.bodyMedium.copyWith(
+                            color: AppColors.primary,
                           ),
+                          // style: TextStyle(
+                          //   color: Color(0xFF4A148C),
+                          //   fontWeight: FontWeight.w600,
+                          // ),
                         ),
                       ],
                     ),
@@ -149,17 +154,24 @@ class _SignUpPageState extends State<SignUpPage> {
             ),
             SizedBox(height: 32),
             ElevatedButton(
-              onPressed: _agreeToTerms ? () {} : null,
+              onPressed: _agreeToTerms
+                  ? () {
+                      Get.offAllNamed(RouteNames.home);
+                    }
+                  : null,
               child: Text(
                 'Sign up',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
+                style: AppTypography.bodyMedium.copyWith(
                   color: Colors.white,
                 ),
+                // style: TextStyle(
+                //   fontSize: 16,
+                //   fontWeight: FontWeight.w600,
+                //   color: Colors.white,
+                // ),
               ),
               style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFF4A148C),
+                backgroundColor: AppColors.primary,
                 minimumSize: Size(double.infinity, 56),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16),
@@ -192,10 +204,8 @@ class _SignUpPageState extends State<SignUpPage> {
                   SizedBox(width: 12),
                   Text(
                     'Sign up with Google',
-                    style: TextStyle(
-                      color: Colors.black87,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
+                    style: AppTypography.bodyMedium.copyWith(
+                      color: Colors.black,
                     ),
                   ),
                 ],
@@ -214,25 +224,25 @@ class _SignUpPageState extends State<SignUpPage> {
               children: [
                 Text(
                   "Have an account? ",
-                  style: TextStyle(
-                    color: Colors.grey[600],
-                    fontSize: 14,
+                  style: AppTypography.bodyLarge.copyWith(
+                    color: AppColors.primary,
                   ),
                 ),
                 GestureDetector(
                   onTap: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (context) => LoginPage()),
-                    );
+                    Get.offAndToNamed(RouteNames.login);
                   },
                   child: Text(
                     'Login',
-                    style: TextStyle(
-                      color: Color(0xFF4A148C),
-                      fontWeight: FontWeight.w600,
+                    style: AppTypography.bodyMedium.copyWith(
+                      color: AppColors.primary,
                       fontSize: 14,
                     ),
+                    // style: TextStyle(
+                    //   color: Color(0xFF4A148C),
+                    //   fontWeight: FontWeight.w600,
+                    //   fontSize: 14,
+                    // ),
                   ),
                 ),
               ],
