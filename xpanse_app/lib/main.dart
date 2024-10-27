@@ -7,7 +7,7 @@ import 'utils/theme.dart';
 import 'controllers/auth_controller.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
