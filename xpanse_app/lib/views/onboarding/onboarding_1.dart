@@ -70,7 +70,9 @@ class OnboardingScreen extends StatelessWidget {
                 width: 327.0,
                 height: 56.0,
                 child: ElevatedButton.icon(
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.offAllNamed(RouteNames.login);
+                  },
                   label: Text(
                     'Skip',
                     style: TextStyle(
