@@ -17,12 +17,10 @@ class AppPages {
     GetPage(
       name: RouteNames.login,
       page: () => LoginPage(),
-      // binding: LoginBinding(),
     ),
     GetPage(
       name: RouteNames.signup,
       page: () => SignUpPage(),
-      // binding: ProfileBinding(),
     ),
     GetPage(
       name: RouteNames.onboarding,
