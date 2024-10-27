@@ -1,12 +1,5 @@
 # Xpanse - Mobile Money Expense Tracker
 
-<div align="center">
-  
-![Xpanse Logo](placeholder-for-logo.png)
-
-*Your Personal Finance Companion*
-
-</div>
 
 ## 📱 About Xpanse
 
