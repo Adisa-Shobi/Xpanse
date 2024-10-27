@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'personal_information_screen.dart';
+import 'start_of_week_screen.dart';
+import 'start_of_month_screen.dart';
 
 class ProfileView extends StatelessWidget {
-  const ProfileView({super.key});
+  const ProfileView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +24,7 @@ class ProfileView extends StatelessWidget {
         child: Column(
           children: [
             // Profile picture and user information
-            const Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 CircleAvatar(
@@ -56,27 +59,32 @@ class ProfileView extends StatelessWidget {
                     context,
                     icon: Icons.person,
                     title: 'Personal Information',
+                    screen: const PersonalInformationScreen(),
                   ),
                   _buildProfileOption(
                     context,
                     icon: Icons.calendar_today,
                     title: 'Start of Week',
+                    screen: const StartOfWeekScreen(),
                   ),
                   _buildProfileOption(
                     context,
                     icon: Icons.calendar_month,
                     title: 'Start of Month',
+                    screen: const StartOfMonthScreen(),
                   ),
                   const SizedBox(height: 16),
                   _buildProfileOption(
                     context,
                     icon: Icons.help_outline,
                     title: 'FAQ',
+                    screen: Container(), // Replace with the actual screen
                   ),
                   _buildProfileOption(
                     context,
                     icon: Icons.contact_mail,
                     title: 'Contact Us',
+                    screen: Container(), // Replace with the actual screen
                   ),
                   const SizedBox(height: 16),
 
@@ -114,7 +122,7 @@ class ProfileView extends StatelessWidget {
 
   // Widget for profile options
   Widget _buildProfileOption(BuildContext context,
-      {required IconData icon, required String title}) {
+      {required IconData icon, required String title, required Widget screen}) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: ListTile(
@@ -125,7 +133,10 @@ class ProfileView extends StatelessWidget {
         ),
         trailing: const Icon(Icons.arrow_forward_ios, color: Colors.grey),
         onTap: () {
-          // Handle option tap
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => screen),
+          );
         },
         tileColor: Colors.grey[100],
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
