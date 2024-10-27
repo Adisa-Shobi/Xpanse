@@ -3,7 +3,7 @@ import '../../../utils/colors.dart';
 import 'package:flutter/material.dart';
 
 class StartOfWeekScreen extends StatelessWidget {
-  const StartOfWeekScreen({Key? key}) : super(key: key);
+  const StartOfWeekScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

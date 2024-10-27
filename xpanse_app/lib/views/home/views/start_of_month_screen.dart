@@ -3,7 +3,7 @@ import '../../../utils/colors.dart';
 import 'package:flutter/material.dart';
 
 class StartOfMonthScreen extends StatelessWidget {
-  const StartOfMonthScreen({Key? key}) : super(key: key);
+  const StartOfMonthScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
