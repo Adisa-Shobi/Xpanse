@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:xpanse_app/utils/colors.dart';
 import 'signup.dart';
 import '../../utils/typography.dart';
 
@@ -131,12 +132,8 @@ class _LoginPageState extends State<LoginPage> {
               children: [
                 Text(
                   "Don't have an account? ",
-                  style: AppTypography.bodyMedium
-                      .copyWith(color: Colors.grey[600]),
-
-                  style: AppTypography.bodyMedium.copyWith(
+                  style: AppTypography.bodyLarge.copyWith(
                     color: Colors.grey[600],
-                    fontSize: 14,
                   ),
                 ),
                 GestureDetector(
@@ -148,8 +145,6 @@ class _LoginPageState extends State<LoginPage> {
                   },
                   child: Text(
                     'Sign up',
-                    style:
-                        AppTypography.button.copyWith(color: Color(0xFF4A148C)),
                     style: AppTypography.bodyLarge.copyWith(
                       color: AppColors.primary,
                       fontWeight: FontWeight.w600,

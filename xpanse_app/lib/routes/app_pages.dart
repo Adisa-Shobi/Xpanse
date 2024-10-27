@@ -13,7 +13,7 @@ class AppPages {
   static final List<GetPage<dynamic>> routes = [
     GetPage(
       name: RouteNames.home,
-      page: () => HomePage(),
+      page: () => const HomePage(),
       binding: HomeBindings(),
     ),
     GetPage(
@@ -22,21 +22,21 @@ class AppPages {
     ),
     GetPage(
       name: RouteNames.signup,
-      page: () => SignUpPage(),
+      page: () => const SignUpPage(),
     ),
     GetPage(
       name: RouteNames.onboarding1,
-      page: () => OnboardingScreen(),
+      page: () => const OnboardingScreen(),
       // binding: ProfileBinding(),
     ),
     GetPage(
       name: RouteNames.onboarding2,
-      page: () => OnboardingScreen2(),
+      page: () => const OnboardingScreen2(),
       // binding: ProfileBinding(),
     ),
     GetPage(
       name: RouteNames.splash,
-      page: () => SplashScreen(),
+      page: () => const SplashScreen(),
     ),
   ];
 }
