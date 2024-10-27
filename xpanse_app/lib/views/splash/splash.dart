@@ -1,33 +1,13 @@
 import 'package:flutter/material.dart';
-import 'onboarding_screen1.dart';
-
-
-void main() {
-  runApp(const MyApp());
-}
-
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: const SplashScreen(),
-    );
-  }
-}
-
+import 'package:get/get.dart';
+import 'package:xpanse_app/routes/route_names.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
-
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
-
 
 class _SplashScreenState extends State<SplashScreen> {
   @override
@@ -35,13 +15,9 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     // Wait for 3 seconds and navigate to the onboarding screen
     Future.delayed(const Duration(seconds: 3), () {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const OnboardingScreen()),
-      );
+      Get.offAllNamed(RouteNames.onboarding1);
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -51,18 +27,10 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset('assets/Xpanse.png'),
+            Image.asset('assets/images/Xpanse.png'),
           ],
         ),
       ),
     );
   }
 }
-
-
-
-
-
-
-
-

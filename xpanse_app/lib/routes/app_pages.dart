@@ -5,6 +5,7 @@ import 'package:xpanse_app/views/auth/signup.dart';
 import 'package:xpanse_app/views/home/home.dart';
 import 'package:xpanse_app/views/onboarding/onboarding_1.dart';
 import 'package:xpanse_app/views/onboarding/onboarding_2.dart';
+import 'package:xpanse_app/views/splash/splash.dart';
 import 'route_names.dart';
 // Import your page components and bindings here
 
@@ -32,6 +33,10 @@ class AppPages {
       name: RouteNames.onboarding2,
       page: () => OnboardingScreen2(),
       // binding: ProfileBinding(),
+    ),
+    GetPage(
+      name: RouteNames.splash,
+      page: () => SplashScreen(),
     ),
   ];
 }
