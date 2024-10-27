@@ -16,7 +16,9 @@ class HomeView extends StatelessWidget {
         child: Column(
           children: [
             Spacing.vertical(Spacing.l),
-            _getHeading(),
+            getHeading(
+              title: 'Good morning Ademola',
+            ),
             Spacing.vertical(Spacing.m),
             _buildBudgetSection(context),
             Spacing.vertical(Spacing.l),
@@ -25,55 +27,6 @@ class HomeView extends StatelessWidget {
             ),
           ],
         ));
-  }
-
-  _getHeading() {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Container(
-          width: 40,
-          height: 40,
-          decoration: const BoxDecoration(
-            shape: BoxShape.circle,
-            color: const Color(0xFFE8F5E9), // Light green background
-          ),
-          child: ClipOval(
-            child: Image.network(
-              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSY2r1g-oKe7WxMwyuhsS5reYmvZ8l5fABcsg&s',
-              fit: BoxFit.cover,
-              errorBuilder: (context, error, stackTrace) {
-                // Fallback to icon if image fails to load
-                return Center(
-                  child: Icon(
-                    Icons.person,
-                    color: Colors.grey[600],
-                    size: 24,
-                  ),
-                );
-              },
-              loadingBuilder: (context, child, loadingProgress) {
-                if (loadingProgress == null) return child;
-                // Show loading indicator while image loads
-                return Center(
-                  child: CircularProgressIndicator(
-                    value: loadingProgress.expectedTotalBytes != null
-                        ? loadingProgress.cumulativeBytesLoaded /
-                            loadingProgress.expectedTotalBytes!
-                        : null,
-                  ),
-                );
-              },
-            ),
-          ),
-        ),
-        Spacing.horizontal(Spacing.l),
-        Text(
-          'Good morning Ademola',
-          style: AppTypography.h3,
-        ),
-      ],
-    );
   }
 
   _buildBudgetSection(BuildContext context) {
@@ -180,6 +133,55 @@ Widget _buildExpenses(BuildContext context) {
           },
           itemCount: 10,
         ),
+      ),
+    ],
+  );
+}
+
+getHeading({title}) {
+  return Row(
+    crossAxisAlignment: CrossAxisAlignment.center,
+    children: [
+      Container(
+        width: 40,
+        height: 40,
+        decoration: const BoxDecoration(
+          shape: BoxShape.circle,
+          color: const Color(0xFFE8F5E9), // Light green background
+        ),
+        child: ClipOval(
+          child: Image.network(
+            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSY2r1g-oKe7WxMwyuhsS5reYmvZ8l5fABcsg&s',
+            fit: BoxFit.cover,
+            errorBuilder: (context, error, stackTrace) {
+              // Fallback to icon if image fails to load
+              return Center(
+                child: Icon(
+                  Icons.person,
+                  color: Colors.grey[600],
+                  size: 24,
+                ),
+              );
+            },
+            loadingBuilder: (context, child, loadingProgress) {
+              if (loadingProgress == null) return child;
+              // Show loading indicator while image loads
+              return Center(
+                child: CircularProgressIndicator(
+                  value: loadingProgress.expectedTotalBytes != null
+                      ? loadingProgress.cumulativeBytesLoaded /
+                          loadingProgress.expectedTotalBytes!
+                      : null,
+                ),
+              );
+            },
+          ),
+        ),
+      ),
+      Spacing.horizontal(Spacing.l),
+      Text(
+        title,
+        style: AppTypography.h3,
       ),
     ],
   );
