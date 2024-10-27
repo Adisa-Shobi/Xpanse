@@ -144,7 +144,10 @@ class _LoginPageState extends State<LoginPage> {
               children: [
                 Text(
                   "Don't have an account? ",
-                  style: AppTypography.bodyLarge.copyWith(),
+                  style: AppTypography.bodyMedium.copyWith(
+                    color: Colors.grey[600],
+                    fontSize: 14,
+                  ),
                 ),
                 GestureDetector(
                   onTap: () {
@@ -152,11 +155,15 @@ class _LoginPageState extends State<LoginPage> {
                   },
                   child: Text(
                     'Sign up',
-                    style: TextStyle(
-                      color: Color(0xFF4A148C),
+                    style: AppTypography.bodyLarge.copyWith(
+                      color: AppColors.primary,
                       fontWeight: FontWeight.w600,
-                      fontSize: 14,
                     ),
+                    // TextStyle(
+                    //   color: Color(0xFF4A148C),
+                    //   fontWeight: FontWeight.w600,
+                    //   fontSize: 14,
+                    // ),
                   ),
                 ),
               ],
