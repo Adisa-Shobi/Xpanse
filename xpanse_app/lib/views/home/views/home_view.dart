@@ -202,7 +202,34 @@ class ExpenseItem extends StatelessWidget {
             Flex(
               direction: Axis.horizontal,
               children: [
-                //Icon here
+                Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: AppColors.primary.withOpacity(0.2),
+                  ),
+                  child: ClipOval(
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Image.asset(
+                        'assets/images/exp-arrow.png',
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) {
+                          // Fallback to icon if image fails to load
+                          return Center(
+                            child: Icon(
+                              Icons.person,
+                              color: Colors.grey[600],
+                              size: 24,
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+                Spacing.horizontal(Spacing.s),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
