@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:xpanse_app/routes/route_names.dart';
+import 'package:xpanse_app/utils/colors.dart';
+import 'package:xpanse_app/utils/typography.dart';
 import 'signup.dart';
 
 class LoginPage extends StatefulWidget {
@@ -38,19 +40,14 @@ class _LoginPageState extends State<LoginPage> {
           children: [
             Text(
               'Login',
-              style: TextStyle(
-                fontSize: 32,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
+              style: AppTypography.h1.copyWith(
+                color: AppColors.primary,
               ),
             ),
             SizedBox(height: 8),
             Text(
               'Welcome back! Please sign in to continue',
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.grey[500],
-              ),
+              style: AppTypography.bodyLarge.copyWith(),
             ),
             SizedBox(height: 32),
             _buildInputSection(
@@ -147,10 +144,7 @@ class _LoginPageState extends State<LoginPage> {
               children: [
                 Text(
                   "Don't have an account? ",
-                  style: TextStyle(
-                    color: Colors.grey[600],
-                    fontSize: 14,
-                  ),
+                  style: AppTypography.bodyLarge.copyWith(),
                 ),
                 GestureDetector(
                   onTap: () {
