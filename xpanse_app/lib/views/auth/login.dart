@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:xpanse_app/routes/route_names.dart';
+import 'package:xpanse_app/utils/colors.dart';
+import 'package:xpanse_app/utils/typography.dart';
 import 'signup.dart';
 
 class LoginPage extends StatefulWidget {
@@ -147,7 +149,7 @@ class _LoginPageState extends State<LoginPage> {
               children: [
                 Text(
                   "Don't have an account? ",
-                  style: TextStyle(
+                  style: AppTypography.bodyMedium.copyWith(
                     color: Colors.grey[600],
                     fontSize: 14,
                   ),
@@ -158,11 +160,15 @@ class _LoginPageState extends State<LoginPage> {
                   },
                   child: Text(
                     'Sign up',
-                    style: TextStyle(
-                      color: Color(0xFF4A148C),
+                    style: AppTypography.bodyLarge.copyWith(
+                      color: AppColors.primary,
                       fontWeight: FontWeight.w600,
-                      fontSize: 14,
                     ),
+                    // TextStyle(
+                    //   color: Color(0xFF4A148C),
+                    //   fontWeight: FontWeight.w600,
+                    //   fontSize: 14,
+                    // ),
                   ),
                 ),
               ],

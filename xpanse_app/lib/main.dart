@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Xpanse',
       theme: AppTheme.lightTheme,
-      initialRoute: RouteNames.onboarding,
+      initialRoute: RouteNames.onboarding1,
       getPages: AppPages.routes,
       initialBinding: BindingsBuilder(() {
         Get.put(AuthController());
