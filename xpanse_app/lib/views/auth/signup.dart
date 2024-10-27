@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:xpanse_app/routes/route_names.dart';
-import 'login.dart';
+import 'package:xpanse_app/utils/colors.dart';
+import 'package:xpanse_app/utils/typography.dart';
 
 class SignUpPage extends StatefulWidget {
+  const SignUpPage({super.key});
+
   @override
   _SignUpPageState createState() => _SignUpPageState();
 }
@@ -12,10 +15,10 @@ class _SignUpPageState extends State<SignUpPage> {
   bool _obscurePassword = true;
   bool _agreeToTerms = false;
   String _password = '';
-  TextEditingController _firstNameController = TextEditingController();
-  TextEditingController _lastNameController = TextEditingController();
-  TextEditingController _phoneController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   @override
   void dispose() {
@@ -31,48 +34,45 @@ class _SignUpPageState extends State<SignUpPage> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black),
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Navigator.pop(context),
         ),
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(horizontal: 24),
+        padding: const EdgeInsets.symmetric(horizontal: 24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               'Sign Up',
-              style: TextStyle(
-                fontSize: 32,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
+              style: AppTypography.h1.copyWith(
+                color: AppColors.primary,
               ),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Text(
               'Create account and enjoy all services',
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.grey[500],
+              style: AppTypography.bodyLarge.copyWith(
+                color: AppColors.primary,
               ),
             ),
-            SizedBox(height: 32),
+            const SizedBox(height: 32),
             _buildInputSection(
               'Enter First Name',
               _firstNameController,
               Icons.person_outline,
               'Ademola',
             ),
-            SizedBox(height: 24),
+            const SizedBox(height: 24),
             _buildInputSection(
               'Enter Last Name',
               _lastNameController,
               Icons.person_outline,
               'Oshingbesan',
             ),
-            SizedBox(height: 24),
+            const SizedBox(height: 24),
             _buildInputSection(
               'Phone Number',
               _phoneController,
@@ -80,22 +80,23 @@ class _SignUpPageState extends State<SignUpPage> {
               '250792402821',
               keyboardType: TextInputType.phone,
             ),
-            SizedBox(height: 24),
+            const SizedBox(height: 24),
             _buildPasswordSection(),
             if (_password.isNotEmpty) ...[
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               Row(
                 children: [
-                  Icon(Icons.check_circle, color: Colors.green, size: 16),
-                  SizedBox(width: 8),
+                  const Icon(Icons.check_circle, color: Colors.green, size: 16),
+                  const SizedBox(width: 8),
                   Text(
                     'Cool! You have very strong password',
-                    style: TextStyle(color: Colors.grey[600], fontSize: 14),
+                    style: AppTypography.bodyMedium
+                        .copyWith(color: Colors.grey[600]),
                   ),
                 ],
               ),
             ],
-            SizedBox(height: 24),
+            const SizedBox(height: 24),
             Row(
               children: [
                 Container(
@@ -103,11 +104,11 @@ class _SignUpPageState extends State<SignUpPage> {
                   height: 24,
                   decoration: BoxDecoration(
                     color:
-                        _agreeToTerms ? Color(0xFF4A148C) : Colors.transparent,
+                        _agreeToTerms ? AppColors.primary : Colors.transparent,
                     borderRadius: BorderRadius.circular(6),
                     border: Border.all(
                       color:
-                          _agreeToTerms ? Color(0xFF4A148C) : Colors.grey[300]!,
+                          _agreeToTerms ? AppColors.primary : Colors.grey[300]!,
                     ),
                   ),
                   child: Checkbox(
@@ -115,32 +116,31 @@ class _SignUpPageState extends State<SignUpPage> {
                     onChanged: (value) {
                       setState(() => _agreeToTerms = value!);
                     },
-                    fillColor: MaterialStateProperty.all(Color(0xFF4A148C)),
+                    fillColor: WidgetStateProperty.all(AppColors.primary),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(6),
                     ),
                   ),
                 ),
-                SizedBox(width: 12),
+                const SizedBox(width: 12),
                 Expanded(
                   child: RichText(
                     text: TextSpan(
-                      style: TextStyle(color: Colors.grey[600], fontSize: 14),
+                      style: AppTypography.bodyMedium
+                          .copyWith(color: Colors.grey[600]),
                       children: [
-                        TextSpan(text: 'I agree to the company '),
+                        const TextSpan(text: 'I agree to the company '),
                         TextSpan(
                           text: 'Term of Service',
-                          style: TextStyle(
-                            color: Color(0xFF4A148C),
-                            fontWeight: FontWeight.w600,
+                          style: AppTypography.bodyMedium.copyWith(
+                            color: AppColors.primary,
                           ),
                         ),
-                        TextSpan(text: ' and '),
+                        const TextSpan(text: ' and '),
                         TextSpan(
                           text: 'Privacy Policy',
-                          style: TextStyle(
-                            color: Color(0xFF4A148C),
-                            fontWeight: FontWeight.w600,
+                          style: AppTypography.bodyMedium.copyWith(
+                            color: AppColors.primary,
                           ),
                         ),
                       ],
@@ -149,45 +149,52 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
               ],
             ),
-            SizedBox(height: 32),
+            const SizedBox(height: 32),
             ElevatedButton(
               onPressed: _agreeToTerms
                   ? () {
                       Get.offAllNamed(RouteNames.home);
                     }
                   : null,
-              child: Text(
-                'Sign up',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.white,
-                ),
-              ),
               style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFF4A148C),
-                minimumSize: Size(double.infinity, 56),
+                backgroundColor: AppColors.primary,
+                minimumSize: const Size(double.infinity, 56),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16),
                 ),
               ),
+              child: Text(
+                'Sign up',
+                style: AppTypography.button.copyWith(
+                  color: Colors.white,
+                ),
+              ),
             ),
-            SizedBox(height: 24),
+            const SizedBox(height: 24),
             Row(
               children: [
-                Expanded(child: Divider()),
+                const Expanded(child: Divider()),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16),
-                  child: Text('OR', style: TextStyle(color: Colors.grey[500])),
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Text('OR',
+                      style: AppTypography.caption
+                          .copyWith(color: Colors.grey[500])),
                 ),
-                Expanded(child: Divider()),
+                const Expanded(child: Divider()),
               ],
             ),
-            SizedBox(height: 24),
+            const SizedBox(height: 24),
             OutlinedButton(
               onPressed: () {
                 // Handle Google sign up
               },
+              style: OutlinedButton.styleFrom(
+                minimumSize: const Size(double.infinity, 56),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                side: BorderSide(color: Colors.grey[300]!),
+              ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -195,34 +202,24 @@ class _SignUpPageState extends State<SignUpPage> {
                     'https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-1024.png',
                     height: 24,
                   ),
-                  SizedBox(width: 12),
+                  const SizedBox(width: 12),
                   Text(
                     'Sign up with Google',
-                    style: TextStyle(
+                    style: AppTypography.button.copyWith(
                       color: Colors.black87,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
                     ),
                   ),
                 ],
               ),
-              style: OutlinedButton.styleFrom(
-                minimumSize: Size(double.infinity, 56),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                side: BorderSide(color: Colors.grey[300]!),
-              ),
             ),
-            SizedBox(height: 24),
+            const SizedBox(height: 24),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
                   "Have an account? ",
-                  style: TextStyle(
+                  style: AppTypography.bodyMedium.copyWith(
                     color: Colors.grey[600],
-                    fontSize: 14,
                   ),
                 ),
                 GestureDetector(
@@ -231,16 +228,14 @@ class _SignUpPageState extends State<SignUpPage> {
                   },
                   child: Text(
                     'Login',
-                    style: TextStyle(
-                      color: Color(0xFF4A148C),
-                      fontWeight: FontWeight.w600,
-                      fontSize: 14,
+                    style: AppTypography.button.copyWith(
+                      color: AppColors.primary,
                     ),
                   ),
                 ),
               ],
             ),
-            SizedBox(height: 24),
+            const SizedBox(height: 24),
           ],
         ),
       ),
@@ -259,13 +254,9 @@ class _SignUpPageState extends State<SignUpPage> {
       children: [
         Text(
           label,
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-            color: Colors.black87,
-          ),
+          style: AppTypography.bodyLarge.copyWith(fontWeight: FontWeight.w600),
         ),
-        SizedBox(height: 8),
+        const SizedBox(height: 8),
         Container(
           decoration: BoxDecoration(
             color: Colors.grey[100],
@@ -274,16 +265,18 @@ class _SignUpPageState extends State<SignUpPage> {
           child: TextField(
             controller: controller,
             keyboardType: keyboardType,
+            style: AppTypography.bodyMedium,
             decoration: InputDecoration(
               hintText: hintText,
-              hintStyle: TextStyle(color: Colors.grey[400]),
+              hintStyle:
+                  AppTypography.bodyMedium.copyWith(color: Colors.grey[400]),
               prefixIcon: Icon(icon, color: Colors.grey[400], size: 22),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(16),
                 borderSide: BorderSide.none,
               ),
               contentPadding:
-                  EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                  const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
             ),
           ),
         ),
@@ -297,13 +290,9 @@ class _SignUpPageState extends State<SignUpPage> {
       children: [
         Text(
           'Password',
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-            color: Colors.black87,
-          ),
+          style: AppTypography.bodyLarge.copyWith(fontWeight: FontWeight.w600),
         ),
-        SizedBox(height: 8),
+        const SizedBox(height: 8),
         Container(
           decoration: BoxDecoration(
             color: Colors.grey[100],
@@ -315,9 +304,11 @@ class _SignUpPageState extends State<SignUpPage> {
             onChanged: (value) {
               setState(() => _password = value);
             },
+            style: AppTypography.bodyMedium,
             decoration: InputDecoration(
               hintText: '••••••',
-              hintStyle: TextStyle(color: Colors.grey[400]),
+              hintStyle:
+                  AppTypography.bodyMedium.copyWith(color: Colors.grey[400]),
               prefixIcon: Icon(
                 Icons.lock_outline,
                 color: Colors.grey[400],
@@ -337,7 +328,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 borderSide: BorderSide.none,
               ),
               contentPadding:
-                  EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                  const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
             ),
           ),
         ),
