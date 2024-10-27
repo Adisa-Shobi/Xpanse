@@ -1,3 +1,5 @@
+import '../../../utils/typography.dart';
+import '../../../utils/colors.dart';
 import 'package:flutter/material.dart';
 
 class StartOfWeekScreen extends StatelessWidget {
@@ -7,37 +9,54 @@ class StartOfWeekScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Start of the Week'),
+        title: Text('Start of the Week', style: AppTypography.h1),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
+            Text(
               'Customize Your Financial Rhythm. Choose the Day Your Week Begins',
+              style: AppTypography.bodyLarge,
             ),
             const SizedBox(height: 20),
             DropdownButtonFormField<String>(
-              items: const [
-                DropdownMenuItem(value: 'Monday', child: Text('Monday')),
-                DropdownMenuItem(value: 'Tuesday', child: Text('Tuesday')),
-                DropdownMenuItem(value: 'Wednesday', child: Text('Wednesday')),
-                DropdownMenuItem(value: 'Thursday', child: Text('Thursday')),
-                DropdownMenuItem(value: 'Friday', child: Text('Friday')),
-                DropdownMenuItem(value: 'Saturday', child: Text('Saturday')),
-                DropdownMenuItem(value: 'Sunday', child: Text('Sunday')),
+              items: [
+                DropdownMenuItem(
+                    child: Text('Monday', style: AppTypography.bodyMedium),
+                    value: 'Monday'),
+                DropdownMenuItem(
+                    child: Text('Tuesday', style: AppTypography.bodyMedium),
+                    value: 'Tuesday'),
+                DropdownMenuItem(
+                    child: Text('Wednesday', style: AppTypography.bodyMedium),
+                    value: 'Wednesday'),
+                DropdownMenuItem(
+                    child: Text('Thursday', style: AppTypography.bodyMedium),
+                    value: 'Thursday'),
+                DropdownMenuItem(
+                    child: Text('Friday', style: AppTypography.bodyMedium),
+                    value: 'Friday'),
+                DropdownMenuItem(
+                    child: Text('Saturday', style: AppTypography.bodyMedium),
+                    value: 'Saturday'),
+                DropdownMenuItem(
+                    child: Text('Sunday', style: AppTypography.bodyMedium),
+                    value: 'Sunday'),
               ],
               onChanged: (value) {},
-              decoration:
-                  const InputDecoration(labelText: 'Select Start of the Week'),
+              decoration: InputDecoration(
+                labelText: 'Select Start of the Week',
+                labelStyle: AppTypography.bodyMedium,
+              ),
             ),
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
                 // Save changes
               },
-              child: const Text('Save changes'),
+              child: Text('Save changes', style: AppTypography.button),
             ),
           ],
         ),
