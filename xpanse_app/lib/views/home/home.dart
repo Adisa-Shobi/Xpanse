@@ -12,9 +12,9 @@ class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   static List<Widget> homePageViews = [
-    HomeView(),
-    ExpensesView(),
-    ProfileView(),
+    const HomeView(),
+    const ExpensesView(),
+    const ProfileView(),
   ];
 
   @override

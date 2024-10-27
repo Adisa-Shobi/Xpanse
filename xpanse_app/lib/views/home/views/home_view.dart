@@ -147,7 +147,7 @@ getHeading({title}) {
         height: 40,
         decoration: const BoxDecoration(
           shape: BoxShape.circle,
-          color: const Color(0xFFE8F5E9), // Light green background
+          color: Color(0xFFE8F5E9), // Light green background
         ),
         child: ClipOval(
           child: Image.network(

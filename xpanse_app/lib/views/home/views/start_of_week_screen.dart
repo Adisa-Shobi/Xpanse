@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class StartOfWeekScreen extends StatelessWidget {
-  const StartOfWeekScreen({Key? key}) : super(key: key);
+  const StartOfWeekScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,14 +19,14 @@ class StartOfWeekScreen extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             DropdownButtonFormField<String>(
-              items: [
-                DropdownMenuItem(child: Text('Monday'), value: 'Monday'),
-                DropdownMenuItem(child: Text('Tuesday'), value: 'Tuesday'),
-                DropdownMenuItem(child: Text('Wednesday'), value: 'Wednesday'),
-                DropdownMenuItem(child: Text('Thursday'), value: 'Thursday'),
-                DropdownMenuItem(child: Text('Friday'), value: 'Friday'),
-                DropdownMenuItem(child: Text('Saturday'), value: 'Saturday'),
-                DropdownMenuItem(child: Text('Sunday'), value: 'Sunday'),
+              items: const [
+                DropdownMenuItem(value: 'Monday', child: Text('Monday')),
+                DropdownMenuItem(value: 'Tuesday', child: Text('Tuesday')),
+                DropdownMenuItem(value: 'Wednesday', child: Text('Wednesday')),
+                DropdownMenuItem(value: 'Thursday', child: Text('Thursday')),
+                DropdownMenuItem(value: 'Friday', child: Text('Friday')),
+                DropdownMenuItem(value: 'Saturday', child: Text('Saturday')),
+                DropdownMenuItem(value: 'Sunday', child: Text('Sunday')),
               ],
               onChanged: (value) {},
               decoration:

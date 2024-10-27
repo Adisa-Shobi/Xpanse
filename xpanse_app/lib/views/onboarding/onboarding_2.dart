@@ -27,7 +27,7 @@ class OnboardingScreen2 extends StatelessWidget {
 
                 const Text(
                   'Manage your money\n            wisely',
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontFamily: 'Montserrat',
                     fontSize: 24,
                     fontWeight: FontWeight.w700,
@@ -35,8 +35,8 @@ class OnboardingScreen2 extends StatelessWidget {
                 ),
                 const Text(
                   '     Track your money flows, balance, and \n       make everyday transactions on the go.',
-                  style: const TextStyle(
-                    color: const Color(0x80000000),
+                  style: TextStyle(
+                    color: Color(0x80000000),
                     fontFamily: 'Montserrat',
                     fontSize: 14,
                     fontWeight: FontWeight.w400,
@@ -54,7 +54,7 @@ class OnboardingScreen2 extends StatelessWidget {
                     },
                     label: const Text(
                       'Get started',
-                      style: const TextStyle(
+                      style: TextStyle(
                           fontFamily: 'Montserrat',
                           fontSize: 16,
                           fontWeight: FontWeight.w500),
@@ -79,7 +79,7 @@ class OnboardingScreen2 extends StatelessWidget {
                     },
                     label: const Text(
                       'Sign-in',
-                      style: const TextStyle(
+                      style: TextStyle(
                           fontFamily: 'Montserrat',
                           fontSize: 16,
                           fontWeight: FontWeight.w500),
