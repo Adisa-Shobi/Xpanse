@@ -271,6 +271,7 @@ class ExpensesView extends StatelessWidget {
             _buildCategoryCard('Groceries', 'Rwf 100,000', Colors.orange[50]!),
           ],
         ),
+        Spacing.vertical(Spacing.l)
       ],
     );
   }
@@ -278,7 +279,7 @@ class ExpensesView extends StatelessWidget {
   Widget _buildCategoryCard(
       String title, String amount, Color backgroundColor) {
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(Spacing.m),
       decoration: BoxDecoration(
         color: backgroundColor,
         borderRadius: BorderRadius.circular(16),
@@ -288,69 +289,30 @@ class ExpensesView extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(8),
             ),
             child: const Icon(
               Icons.home,
-              color: Color(0xFF6B21A8),
+              color: AppColors.primary,
               size: 20,
             ),
           ),
           const SizedBox(height: 8),
           Text(
             title,
-            style: const TextStyle(
-              fontSize: 8,
+            style: AppTypography.bodySmall.copyWith(
               fontWeight: FontWeight.w500,
             ),
           ),
           const SizedBox(height: 4),
           Text(
             amount,
-            style: const TextStyle(
+            style: AppTypography.bodySmall.copyWith(
               fontSize: 8,
               color: Colors.grey,
             ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildBottomNavBar() {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
-            spreadRadius: 1,
-            blurRadius: 4,
-            offset: const Offset(0, -2),
-          ),
-        ],
-      ),
-      child: BottomNavigationBar(
-        currentIndex: 1,
-        selectedItemColor: const Color(0xFF6B21A8),
-        unselectedItemColor: Colors.grey,
-        showSelectedLabels: true,
-        showUnselectedLabels: true,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.bar_chart),
-            label: 'Expenses',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
           ),
         ],
       ),
