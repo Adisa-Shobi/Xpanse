@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:xpanse_app/routes/route_names.dart';
-import 'package:xpanse_app/utils/colors.dart';
-import 'package:xpanse_app/utils/typography.dart';
 import 'signup.dart';
+import '../../utils/typography.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -40,14 +37,12 @@ class _LoginPageState extends State<LoginPage> {
           children: [
             Text(
               'Login',
-              style: AppTypography.h1.copyWith(
-                color: AppColors.primary,
-              ),
+              style: AppTypography.h1,
             ),
             SizedBox(height: 8),
             Text(
               'Welcome back! Please sign in to continue',
-              style: AppTypography.bodyLarge.copyWith(),
+              style: AppTypography.bodyMedium.copyWith(color: Colors.grey[500]),
             ),
             SizedBox(height: 32),
             _buildInputSection(
@@ -68,25 +63,19 @@ class _LoginPageState extends State<LoginPage> {
                 },
                 child: Text(
                   'Forgot Password?',
-                  style: TextStyle(
-                    color: Color(0xFF4A148C),
-                    fontWeight: FontWeight.w600,
-                  ),
+                  style:
+                      AppTypography.button.copyWith(color: Color(0xFF4A148C)),
                 ),
               ),
             ),
             SizedBox(height: 32),
             ElevatedButton(
               onPressed: () {
-                Get.offAllNamed(RouteNames.home);
+                // Handle login
               },
               child: Text(
                 'Login',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.white,
-                ),
+                style: AppTypography.button.copyWith(color: Colors.white),
               ),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Color(0xFF4A148C),
@@ -102,7 +91,9 @@ class _LoginPageState extends State<LoginPage> {
                 Expanded(child: Divider()),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16),
-                  child: Text('OR', style: TextStyle(color: Colors.grey[500])),
+                  child: Text('OR',
+                      style: AppTypography.caption
+                          .copyWith(color: Colors.grey[500])),
                 ),
                 Expanded(child: Divider()),
               ],
@@ -122,11 +113,7 @@ class _LoginPageState extends State<LoginPage> {
                   SizedBox(width: 12),
                   Text(
                     'Sign in with Google',
-                    style: TextStyle(
-                      color: Colors.black87,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                    ),
+                    style: AppTypography.button.copyWith(color: Colors.black87),
                   ),
                 ],
               ),
@@ -144,6 +131,9 @@ class _LoginPageState extends State<LoginPage> {
               children: [
                 Text(
                   "Don't have an account? ",
+                  style: AppTypography.bodyMedium
+                      .copyWith(color: Colors.grey[600]),
+
                   style: AppTypography.bodyMedium.copyWith(
                     color: Colors.grey[600],
                     fontSize: 14,
@@ -151,10 +141,15 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Get.offAndToNamed(RouteNames.signup);
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => SignUpPage()),
+                    );
                   },
                   child: Text(
                     'Sign up',
+                    style:
+                        AppTypography.button.copyWith(color: Color(0xFF4A148C)),
                     style: AppTypography.bodyLarge.copyWith(
                       color: AppColors.primary,
                       fontWeight: FontWeight.w600,
@@ -187,11 +182,7 @@ class _LoginPageState extends State<LoginPage> {
       children: [
         Text(
           label,
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-            color: Colors.black87,
-          ),
+          style: AppTypography.bodyLarge.copyWith(fontWeight: FontWeight.w600),
         ),
         SizedBox(height: 8),
         Container(
@@ -202,9 +193,11 @@ class _LoginPageState extends State<LoginPage> {
           child: TextField(
             controller: controller,
             keyboardType: keyboardType,
+            style: AppTypography.bodyMedium,
             decoration: InputDecoration(
               hintText: hintText,
-              hintStyle: TextStyle(color: Colors.grey[400]),
+              hintStyle:
+                  AppTypography.bodyMedium.copyWith(color: Colors.grey[400]),
               prefixIcon: Icon(icon, color: Colors.grey[400], size: 22),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(16),
@@ -225,11 +218,7 @@ class _LoginPageState extends State<LoginPage> {
       children: [
         Text(
           'Password',
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-            color: Colors.black87,
-          ),
+          style: AppTypography.bodyLarge.copyWith(fontWeight: FontWeight.w600),
         ),
         SizedBox(height: 8),
         Container(
@@ -240,9 +229,11 @@ class _LoginPageState extends State<LoginPage> {
           child: TextField(
             controller: _passwordController,
             obscureText: _obscurePassword,
+            style: AppTypography.bodyMedium,
             decoration: InputDecoration(
               hintText: '••••••',
-              hintStyle: TextStyle(color: Colors.grey[400]),
+              hintStyle:
+                  AppTypography.bodyMedium.copyWith(color: Colors.grey[400]),
               prefixIcon: Icon(
                 Icons.lock_outline,
                 color: Colors.grey[400],
