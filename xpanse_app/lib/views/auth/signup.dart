@@ -3,7 +3,11 @@ import 'package:get/get.dart';
 import 'package:xpanse_app/routes/route_names.dart';
 import 'package:xpanse_app/utils/colors.dart';
 import 'package:xpanse_app/utils/typography.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../controllers/auth_controller.dart';
 import 'login.dart';
+import '../../controllers/auth_controller.dart';
 
 class SignUpPage extends StatefulWidget {
   @override
@@ -13,11 +17,17 @@ class SignUpPage extends StatefulWidget {
 class _SignUpPageState extends State<SignUpPage> {
   bool _obscurePassword = true;
   bool _agreeToTerms = false;
+  bool _isLoading = false;
   String _password = '';
-  TextEditingController _firstNameController = TextEditingController();
-  TextEditingController _lastNameController = TextEditingController();
-  TextEditingController _phoneController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+
+  final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
+  final TextEditingController _emailController =
+      TextEditingController(); // Changed from phone to email
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+
+  final AuthService _authService = AuthService();
 
   @override
   void dispose() {
@@ -26,6 +36,126 @@ class _SignUpPageState extends State<SignUpPage> {
     _phoneController.dispose();
     _passwordController.dispose();
     super.dispose();
+  }
+
+  Future<void> _handleSignUp() async {
+    if (!_validateInputs()) return;
+
+    setState(() => _isLoading = true);
+
+    try {
+      // Create basic user data map without Firestore-specific fields
+      final Map<String, String> userData = {
+        'firstName': _firstNameController.text.trim(),
+        'lastName': _lastNameController.text.trim(),
+        'displayName':
+            '${_firstNameController.text.trim()} ${_lastNameController.text.trim()}',
+        'email': _emailController.text.trim(),
+        'userType': 'email',
+        'status': 'active',
+      };
+
+      // Pass to auth service
+      final userCredential = await _authService.signUpWithEmailPassword(
+        _emailController.text.trim(),
+        _passwordController.text,
+        userData,
+      );
+
+      if (userCredential != null) {
+        // Show success message
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Account created successfully!'),
+            backgroundColor: Colors.green,
+          ),
+        );
+
+        // Navigate to home
+        Get.offAllNamed(RouteNames.home);
+      }
+    } catch (e) {
+      _showErrorSnackBar(_handleAuthError(e));
+    } finally {
+      setState(() => _isLoading = false);
+    }
+  }
+
+  Future<void> _handleGoogleSignUp() async {
+    setState(() => _isLoading = true);
+
+    try {
+      final userCredential = await _authService.signInWithGoogle();
+      if (userCredential != null) {
+        Get.offAllNamed(RouteNames.home);
+      }
+    } catch (e) {
+      _showErrorSnackBar(_handleAuthError(e));
+    } finally {
+      setState(() => _isLoading = false);
+    }
+  }
+
+  bool _validateInputs() {
+    if (_firstNameController.text.isEmpty) {
+      _showErrorSnackBar('Please enter your first name');
+      return false;
+    }
+    if (_lastNameController.text.isEmpty) {
+      _showErrorSnackBar('Please enter your last name');
+      return false;
+    }
+    if (_emailController.text.isEmpty) {
+      _showErrorSnackBar('Please enter your email');
+      return false;
+    }
+    if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+        .hasMatch(_emailController.text)) {
+      _showErrorSnackBar('Please enter a valid email address');
+      return false;
+    }
+    if (_passwordController.text.isEmpty) {
+      _showErrorSnackBar('Please enter your password');
+      return false;
+    }
+    if (_passwordController.text.length < 6) {
+      _showErrorSnackBar('Password must be at least 6 characters');
+      return false;
+    }
+    if (!_agreeToTerms) {
+      _showErrorSnackBar(
+          'Please agree to the Terms of Service and Privacy Policy');
+      return false;
+    }
+    return true;
+  }
+
+  String _handleAuthError(dynamic e) {
+    if (e is FirebaseAuthException) {
+      switch (e.code) {
+        case 'email-already-in-use':
+          return 'An account already exists with this email.';
+        case 'invalid-email':
+          return 'Please enter a valid email address.';
+        case 'operation-not-allowed':
+          return 'Email/password accounts are not enabled.';
+        case 'weak-password':
+          return 'Please enter a stronger password.';
+        default:
+          return 'An error occurred. Please try again.';
+      }
+    }
+    return 'An unexpected error occurred.';
+  }
+
+  void _showErrorSnackBar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: Colors.red,
+        duration: Duration(seconds: 3),
+      ),
+    );
   }
 
   @override
@@ -70,6 +200,13 @@ class _SignUpPageState extends State<SignUpPage> {
               _lastNameController,
               Icons.person_outline,
               'Oshingbesan',
+            ),
+            SizedBox(height: 24),
+            _buildInputSection(
+              'Enter Email',
+              _emailController,
+              Icons.mail,
+              'test@gmail.com',
             ),
             SizedBox(height: 24),
             _buildInputSection(
@@ -150,11 +287,7 @@ class _SignUpPageState extends State<SignUpPage> {
             ),
             SizedBox(height: 32),
             ElevatedButton(
-              onPressed: _agreeToTerms
-                  ? () {
-                      Get.offAllNamed(RouteNames.home);
-                    }
-                  : null,
+              onPressed: _isLoading || !_agreeToTerms ? null : _handleSignUp,
               child: Text(
                 'Sign up',
                 style: AppTypography.button.copyWith(

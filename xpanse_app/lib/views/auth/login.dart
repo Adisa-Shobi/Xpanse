@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:xpanse_app/views/home/home.dart';
 import 'signup.dart';
 import '../../utils/typography.dart';
+import '../../utils/colors.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import '../../controllers/auth_controller.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -9,14 +13,129 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   bool _obscurePassword = true;
-  TextEditingController _phoneController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+  // Remove phone controller since we're using email
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  final AuthService _authService = AuthService();
+  bool _isLoading = false;
 
   @override
   void dispose() {
-    _phoneController.dispose();
+    _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
+  }
+
+  // Modified email validation
+  bool _validateInputs() {
+    String email = _emailController.text.trim();
+    if (email.isEmpty) {
+      _showErrorSnackBar('Please enter your email');
+      return false;
+    }
+    // Basic email format validation
+    if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(email)) {
+      _showErrorSnackBar('Please enter a valid email address');
+      return false;
+    }
+    if (_passwordController.text.isEmpty) {
+      _showErrorSnackBar('Please enter your password');
+      return false;
+    }
+    return true;
+  }
+
+  Future<void> _handleEmailPasswordLogin() async {
+    if (!_validateInputs()) return;
+
+    setState(() => _isLoading = true);
+
+    try {
+      await _authService.signInWithEmailPassword(
+        _emailController.text.trim(),
+        _passwordController.text,
+      );
+      _navigateToHome();
+    } on FirebaseAuthException catch (e) {
+      String errorMessage;
+      switch (e.code) {
+        case 'user-not-found':
+          errorMessage = 'No user found with this email.';
+          break;
+        case 'wrong-password':
+          errorMessage = 'Wrong password provided.';
+          break;
+        case 'invalid-email':
+          errorMessage = 'The email address is invalid.';
+          break;
+        case 'user-disabled':
+          errorMessage = 'This user account has been disabled.';
+          break;
+        default:
+          errorMessage = 'An error occurred. Please try again.';
+      }
+      _showErrorSnackBar(errorMessage);
+    } catch (e) {
+      _showErrorSnackBar('An unexpected error occurred');
+    } finally {
+      setState(() => _isLoading = false);
+    }
+  }
+
+  Future<void> _handleForgotPassword() async {
+    String email = _emailController.text.trim();
+    if (email.isEmpty) {
+      _showErrorSnackBar('Please enter your email address');
+      return;
+    }
+
+    setState(() => _isLoading = true);
+    try {
+      await _authService.resetPassword(email);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Password reset email sent. Please check your inbox.'),
+          backgroundColor: Colors.green,
+        ),
+      );
+    } catch (e) {
+      _showErrorSnackBar('Failed to send reset email. Please try again.');
+    } finally {
+      setState(() => _isLoading = false);
+    }
+  }
+
+  Future<void> _handleGoogleSignIn() async {
+    setState(() => _isLoading = true);
+
+    try {
+      final userCredential = await _authService.signInWithGoogle();
+      if (userCredential != null) {
+        _navigateToHome();
+      }
+    } on FirebaseAuthException catch (e) {
+      _showErrorSnackBar(e.message ?? 'Failed to sign in with Google');
+    } catch (e) {
+      _showErrorSnackBar('An unexpected error occurred');
+    } finally {
+      setState(() => _isLoading = false);
+    }
+  }
+
+  void _showErrorSnackBar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: Colors.red,
+        duration: Duration(seconds: 3),
+      ),
+    );
+  }
+
+  void _navigateToHome() {
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => HomePage()));
   }
 
   @override
@@ -46,11 +165,11 @@ class _LoginPageState extends State<LoginPage> {
             ),
             SizedBox(height: 32),
             _buildInputSection(
-              'Phone Number',
-              _phoneController,
-              Icons.phone_outlined,
-              '250792402821',
-              keyboardType: TextInputType.phone,
+              'Email',
+              _emailController,
+              Icons.email_outlined,
+              'example@email.com',
+              keyboardType: TextInputType.emailAddress,
             ),
             SizedBox(height: 24),
             _buildPasswordSection(),
@@ -58,9 +177,7 @@ class _LoginPageState extends State<LoginPage> {
             Align(
               alignment: Alignment.centerRight,
               child: TextButton(
-                onPressed: () {
-                  // Handle forgot password
-                },
+                onPressed: _handleForgotPassword,
                 child: Text(
                   'Forgot Password?',
                   style:
@@ -70,13 +187,13 @@ class _LoginPageState extends State<LoginPage> {
             ),
             SizedBox(height: 32),
             ElevatedButton(
-              onPressed: () {
-                // Handle login
-              },
-              child: Text(
-                'Login',
-                style: AppTypography.button.copyWith(color: Colors.white),
-              ),
+              onPressed: _isLoading ? null : _handleEmailPasswordLogin,
+              child: _isLoading
+                  ? CircularProgressIndicator(color: Colors.white)
+                  : Text(
+                      'Login',
+                      style: AppTypography.button.copyWith(color: Colors.white),
+                    ),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Color(0xFF4A148C),
                 minimumSize: Size(double.infinity, 56),
@@ -100,9 +217,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
             SizedBox(height: 24),
             OutlinedButton(
-              onPressed: () {
-                // Handle Google sign in
-              },
+              onPressed: _isLoading ? null : _handleGoogleSignIn,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -133,11 +248,6 @@ class _LoginPageState extends State<LoginPage> {
                   "Don't have an account? ",
                   style: AppTypography.bodyMedium
                       .copyWith(color: Colors.grey[600]),
-
-                  style: AppTypography.bodyMedium.copyWith(
-                    color: Colors.grey[600],
-                    fontSize: 14,
-                  ),
                 ),
                 GestureDetector(
                   onTap: () {
@@ -148,8 +258,7 @@ class _LoginPageState extends State<LoginPage> {
                   },
                   child: Text(
                     'Sign up',
-                    style:
-                        AppTypography.button.copyWith(color: Color(0xFF4A148C)),
+
                     style: AppTypography.bodyLarge.copyWith(
                       color: AppColors.primary,
                       fontWeight: FontWeight.w600,

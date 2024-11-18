@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1036510185853",
+    "project_id": "xpanse-29a29",
+    "storage_bucket": "xpanse-29a29.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1036510185853:android:a674525d4ed765c02da414",
+        "android_client_info": {
+          "package_name": "com.example.xpanse_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1036510185853-psk9niem9bgj4qhrqlm87ua66qpi7620.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBfP_BjfkWm7noqj9bEhWJH2vCA0TI7F4k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1036510185853-psk9niem9bgj4qhrqlm87ua66qpi7620.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
