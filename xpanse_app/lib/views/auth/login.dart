@@ -194,6 +194,7 @@ class _LoginPageState extends State<LoginPage> {
                       'Login',
                       style: AppTypography.button.copyWith(color: Colors.white),
                     ),
+              
               style: ElevatedButton.styleFrom(
                 backgroundColor: Color(0xFF4A148C),
                 minimumSize: Size(double.infinity, 56),
@@ -248,6 +249,7 @@ class _LoginPageState extends State<LoginPage> {
                   "Don't have an account? ",
                   style: AppTypography.bodyMedium
                       .copyWith(color: Colors.grey[600]),
+
                 ),
                 GestureDetector(
                   onTap: () {

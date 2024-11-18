@@ -1,16 +1,21 @@
+import '../../../utils/typography.dart';
+import '../../../utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'personal_information_screen.dart';
 import 'start_of_week_screen.dart';
 import 'start_of_month_screen.dart';
 
 class ProfileView extends StatelessWidget {
-  const ProfileView({Key? key}) : super(key: key);
+  const ProfileView({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('My Profile'),
+        title: Text(
+          'My Profile',
+          style: AppTypography.h1
+        ),
         centerTitle: true,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
@@ -24,7 +29,7 @@ class ProfileView extends StatelessWidget {
         child: Column(
           children: [
             // Profile picture and user information
-            Row(
+            const Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 CircleAvatar(
@@ -35,19 +40,15 @@ class ProfileView extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 8),
-            const Text(
-              'Ademola Oshinogbesan',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
+            Text(
+              'Ademola Oshingbesan',
+              style: AppTypography.h2,
             ),
-            const Text(
+            Text(
               '(+250) 792 402 821',
-              style: TextStyle(
-                fontSize: 16,
+              style: AppTypography.h2.copyWith(
                 color: Colors.grey,
-              ),
+              )
             ),
             const SizedBox(height: 32),
 
