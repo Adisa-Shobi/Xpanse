@@ -1,5 +1,6 @@
 // lib/main.dart
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:xpanse_app/routes/route_names.dart';
@@ -11,7 +12,7 @@ import 'package:firebase_core/firebase_core.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  FirebaseFirestore.instance.settings = Settings(
+  FirebaseFirestore.instance.settings = const Settings(
     persistenceEnabled: true,
     cacheSizeBytes: Settings.CACHE_SIZE_UNLIMITED,
   );
@@ -26,7 +27,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Xpanse',
       theme: AppTheme.lightTheme,
-      initialRoute: RouteNames.splash,
+      initialRoute: FirebaseAuth.instance.currentUser == null
+          ? RouteNames.onboarding1
+          : RouteNames.home,
       getPages: AppPages.routes,
       initialBinding: BindingsBuilder(() {
         Get.put(AuthService());

@@ -4,11 +4,7 @@ import 'package:xpanse_app/routes/route_names.dart';
 import 'package:xpanse_app/utils/colors.dart';
 import 'package:xpanse_app/utils/typography.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../controllers/auth_controller.dart';
-import 'login.dart';
-import '../../controllers/auth_controller.dart';
-
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -31,7 +27,6 @@ class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController _phoneController = TextEditingController();
 
   final AuthService _authService = AuthService();
-
 
   @override
   void dispose() {
@@ -298,18 +293,11 @@ class _SignUpPageState extends State<SignUpPage> {
                   color: Colors.white,
                 ),
               ),
-
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.primary,
                 minimumSize: const Size(double.infinity, 56),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16),
-                ),
-              ),
-              child: Text(
-                'Sign up',
-                style: AppTypography.button.copyWith(
-                  color: Colors.white,
                 ),
               ),
             ),

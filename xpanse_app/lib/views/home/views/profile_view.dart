@@ -1,3 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get/get.dart';
+import 'package:xpanse_app/controllers/auth_controller.dart';
+import 'package:xpanse_app/routes/route_names.dart';
+
 import '../../../utils/typography.dart';
 import '../../../utils/colors.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +19,7 @@ class ProfileView extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           'My Profile',
-          style: AppTypography.h1
+          style: AppTypography.h3,
         ),
         centerTitle: true,
         leading: IconButton(
@@ -42,14 +47,12 @@ class ProfileView extends StatelessWidget {
             const SizedBox(height: 8),
             Text(
               'Ademola Oshingbesan',
-              style: AppTypography.h2,
+              style: AppTypography.bodyLarge,
             ),
-            Text(
-              '(+250) 792 402 821',
-              style: AppTypography.h2.copyWith(
-                color: Colors.grey,
-              )
-            ),
+            Text('(+250) 792 402 821',
+                style: AppTypography.bodyMedium.copyWith(
+                  color: Colors.grey,
+                )),
             const SizedBox(height: 32),
 
             // Options list
@@ -94,12 +97,16 @@ class ProfileView extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: OutlinedButton.icon(
                       onPressed: () {
-                        // Handle logout functionality
+                        AuthService().signOut().then((value) {
+                          Get.offAllNamed(RouteNames.login);
+                        });
                       },
                       icon: const Icon(Icons.logout, color: Colors.redAccent),
-                      label: const Text(
+                      label: Text(
                         'Log Out',
-                        style: TextStyle(color: Colors.redAccent),
+                        style: AppTypography.bodyMedium.copyWith(
+                          color: Colors.redAccent,
+                        ),
                       ),
                       style: OutlinedButton.styleFrom(
                         backgroundColor: Colors.red[50],
@@ -128,10 +135,7 @@ class ProfileView extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: ListTile(
         leading: Icon(icon, color: Colors.blue),
-        title: Text(
-          title,
-          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-        ),
+        title: Text(title, style: AppTypography.bodyLarge),
         trailing: const Icon(Icons.arrow_forward_ios, color: Colors.grey),
         onTap: () {
           Navigator.push(
