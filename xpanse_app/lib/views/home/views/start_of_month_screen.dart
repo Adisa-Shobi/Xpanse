@@ -9,7 +9,7 @@ class StartOfMonthScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Start of the Month', style: AppTypography.h1),
+        title: Text('Start of the Month', style: AppTypography.h3),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -125,10 +125,18 @@ class StartOfMonthScreen extends StatelessWidget {
             ),
             SizedBox(height: 20),
             ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.primary,
+              ),
               onPressed: () {
                 // Save changes
               },
-              child: Text('Save changes', style: AppTypography.button),
+              child: Text(
+                'Save changes',
+                style: AppTypography.button.copyWith(
+                  color: Colors.white,
+                ),
+              ),
             ),
           ],
         ),

@@ -1,7 +1,9 @@
 // First, create auth_service.dart:
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:xpanse_app/routes/route_names.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -64,6 +66,13 @@ class AuthService {
     } on FirebaseAuthException catch (e) {
       throw _handleAuthException(e);
     }
+  }
+
+  static User? get currentUser {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) return user;
+    Get.offAllNamed(RouteNames.login);
+    AuthService().signOut();
   }
 
   // Sign out
