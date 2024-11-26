@@ -1,13 +1,27 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:xpanse_app/utils/colors.dart';
+import 'package:flutter/material.dart';
+import '../../../utils/colors.dart';
 import '../../../utils/typography.dart';
+import 'package:xpanse_app/controllers/profile_controller.dart';
 
 class PersonalInformationScreen extends StatelessWidget {
-  const PersonalInformationScreen({super.key});
+  PersonalInformationScreen({super.key});
+
+  // Access the ProfileController
+  final ProfileController profileController = Get.put(ProfileController());
 
   @override
   Widget build(BuildContext context) {
+    // TextControllers for form fields
+    final TextEditingController firstNameController =
+        TextEditingController(text: profileController.firstName.value);
+    final TextEditingController lastNameController =
+        TextEditingController(text: profileController.lastName.value);
+    final TextEditingController emailController =
+        TextEditingController(text: profileController.email.value);
+    final TextEditingController phoneController =
+        TextEditingController(text: profileController.phoneNumber.value);
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Personal Information', style: AppTypography.h3),
@@ -23,14 +37,15 @@ class PersonalInformationScreen extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              const CircleAvatar(
-                radius: 40,
-                backgroundImage:
-                    AssetImage('assets/images/profile_picture.png'),
-              ),
+              Obx(() => CircleAvatar(
+                    radius: 40,
+                    backgroundImage:
+                        NetworkImage(profileController.profileImageUrl.value),
+                  )),
               TextButton(
                 onPressed: () {
                   // Handle change picture functionality
+                  profileController.changeProfileImage();
                 },
                 child: Text(
                   'Change Picture',
@@ -40,32 +55,31 @@ class PersonalInformationScreen extends StatelessWidget {
                 ),
               ),
               TextField(
-                  decoration: InputDecoration(
-                    labelText: 'First Name',
-                    labelStyle: AppTypography.caption,
-                  ),
-                  style: AppTypography.bodyMedium),
-              TextField(
-                  decoration: InputDecoration(
-                    labelText: 'Last Name',
-                    labelStyle: AppTypography.caption,
-                  ),
-                  style: AppTypography.bodyMedium),
-              TextField(
-                  decoration: InputDecoration(
-                    labelText: 'Email',
-                    labelStyle: AppTypography.caption,
-                  ),
-                  style: AppTypography.bodyMedium),
-              TextField(
+                controller: firstNameController,
                 decoration: InputDecoration(
-                  labelText: 'Password',
+                  labelText: 'First Name',
                   labelStyle: AppTypography.caption,
                 ),
                 style: AppTypography.bodyMedium,
-                obscureText: true,
               ),
               TextField(
+                controller: lastNameController,
+                decoration: InputDecoration(
+                  labelText: 'Last Name',
+                  labelStyle: AppTypography.caption,
+                ),
+                style: AppTypography.bodyMedium,
+              ),
+              TextField(
+                controller: emailController,
+                decoration: InputDecoration(
+                  labelText: 'Email',
+                  labelStyle: AppTypography.caption,
+                ),
+                style: AppTypography.bodyMedium,
+              ),
+              TextField(
+                controller: phoneController,
                 decoration: InputDecoration(
                   labelText: 'Phone Number',
                   labelStyle: AppTypography.caption,
@@ -75,7 +89,12 @@ class PersonalInformationScreen extends StatelessWidget {
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
-                  // Save changes
+                  _saveChanges(
+                    firstNameController.text,
+                    lastNameController.text,
+                    emailController.text,
+                    phoneController.text,
+                  );
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primary,
@@ -100,6 +119,17 @@ class PersonalInformationScreen extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  void _saveChanges(
+      String firstName, String lastName, String email, String phoneNumber) {
+    // Trigger profile update
+    profileController.updateProfileData(
+      firstName: firstName,
+      lastName: lastName,
+      phoneNumber: phoneNumber,
+      email: email,
     );
   }
 }

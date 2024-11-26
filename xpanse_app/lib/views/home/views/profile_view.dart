@@ -33,14 +33,14 @@ class ProfileView extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0),
         child: Column(
           children: [
-            // Profile picture and user information
             const Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 CircleAvatar(
                   radius: 40,
-                  backgroundImage: AssetImage(
-                      'assets/profile_picture.png'), // Replace with your image asset
+                  backgroundImage: NetworkImage(
+                    'https://images.pexels.com/photos/6626903/pexels-photo-6626903.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+                  ),
                 ),
               ],
             ),
@@ -63,7 +63,7 @@ class ProfileView extends StatelessWidget {
                     context,
                     icon: Icons.person,
                     title: 'Personal Information',
-                    screen: const PersonalInformationScreen(),
+                    screen: PersonalInformationScreen(),
                   ),
                   _buildProfileOption(
                     context,
@@ -82,13 +82,13 @@ class ProfileView extends StatelessWidget {
                     context,
                     icon: Icons.help_outline,
                     title: 'FAQ',
-                    screen: Container(), // Replace with the actual screen
+                    screen: Container(),
                   ),
                   _buildProfileOption(
                     context,
                     icon: Icons.contact_mail,
                     title: 'Contact Us',
-                    screen: Container(), // Replace with the actual screen
+                    screen: Container(),
                   ),
                   const SizedBox(height: 16),
 
