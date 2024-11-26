@@ -57,7 +57,7 @@ class ProfileView extends GetWidget<HomeController> {
                       context,
                       icon: Icons.person,
                       title: 'Personal Information',
-                      screen: const PersonalInformationScreen(),
+                      screen: PersonalInformationScreen(),
                     ),
                     _buildProfileOption(
                       context,
