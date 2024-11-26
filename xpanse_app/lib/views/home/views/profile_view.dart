@@ -1,16 +1,14 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:xpanse_app/controllers/auth_controller.dart';
+import 'package:xpanse_app/controllers/home_controller.dart';
 import 'package:xpanse_app/routes/route_names.dart';
-
-import '../../../utils/typography.dart';
-import '../../../utils/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:xpanse_app/utils/typography.dart';
 import 'personal_information_screen.dart';
 import 'start_of_week_screen.dart';
 import 'start_of_month_screen.dart';
 
-class ProfileView extends StatelessWidget {
+class ProfileView extends GetWidget<HomeController> {
   const ProfileView({super.key});
 
   @override
@@ -22,107 +20,104 @@ class ProfileView extends StatelessWidget {
           style: AppTypography.h3,
         ),
         centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0),
-        child: Column(
-          children: [
-            // Profile picture and user information
-            const Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CircleAvatar(
-                  radius: 40,
-                  backgroundImage: AssetImage(
-                      'assets/profile_picture.png'), // Replace with your image asset
-                ),
-              ],
-            ),
-            const SizedBox(height: 8),
-            Text(
-              'Ademola Oshingbesan',
-              style: AppTypography.bodyLarge,
-            ),
-            Text('(+250) 792 402 821',
-                style: AppTypography.bodyMedium.copyWith(
-                  color: Colors.grey,
-                )),
-            const SizedBox(height: 32),
-
-            // Options list
-            Expanded(
-              child: ListView(
+        child: Obx(
+          () => Column(
+            children: [
+              // Profile picture and user information
+              const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  _buildProfileOption(
-                    context,
-                    icon: Icons.person,
-                    title: 'Personal Information',
-                    screen: const PersonalInformationScreen(),
-                  ),
-                  _buildProfileOption(
-                    context,
-                    icon: Icons.calendar_today,
-                    title: 'Start of Week',
-                    screen: const StartOfWeekScreen(),
-                  ),
-                  _buildProfileOption(
-                    context,
-                    icon: Icons.calendar_month,
-                    title: 'Start of Month',
-                    screen: const StartOfMonthScreen(),
-                  ),
-                  const SizedBox(height: 16),
-                  _buildProfileOption(
-                    context,
-                    icon: Icons.help_outline,
-                    title: 'FAQ',
-                    screen: Container(), // Replace with the actual screen
-                  ),
-                  _buildProfileOption(
-                    context,
-                    icon: Icons.contact_mail,
-                    title: 'Contact Us',
-                    screen: Container(), // Replace with the actual screen
-                  ),
-                  const SizedBox(height: 16),
-
-                  // Log Out button
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: OutlinedButton.icon(
-                      onPressed: () {
-                        AuthService().signOut().then((value) {
-                          Get.offAllNamed(RouteNames.login);
-                        });
-                      },
-                      icon: const Icon(Icons.logout, color: Colors.redAccent),
-                      label: Text(
-                        'Log Out',
-                        style: AppTypography.bodyMedium.copyWith(
-                          color: Colors.redAccent,
-                        ),
-                      ),
-                      style: OutlinedButton.styleFrom(
-                        backgroundColor: Colors.red[50],
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                        side: BorderSide(
-                            color: Colors.redAccent.withOpacity(0.2)),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                    ),
+                  CircleAvatar(
+                    radius: 40,
+                    backgroundImage: AssetImage(
+                      'assets/profile_picture.png',
+                    ), // Replace with your image asset
                   ),
                 ],
               ),
-            ),
-          ],
+              const SizedBox(height: 8),
+              Text(
+                controller.userMetaData.value?.displayName ?? '',
+                style: AppTypography.bodyLarge,
+              ),
+              Text(controller.userMetaData.value?.email ?? '',
+                  style: AppTypography.bodyMedium.copyWith(
+                    color: Colors.grey,
+                  )),
+              const SizedBox(height: 32),
+
+              // Options list
+              Expanded(
+                child: ListView(
+                  children: [
+                    _buildProfileOption(
+                      context,
+                      icon: Icons.person,
+                      title: 'Personal Information',
+                      screen: const PersonalInformationScreen(),
+                    ),
+                    _buildProfileOption(
+                      context,
+                      icon: Icons.calendar_today,
+                      title: 'Start of Week',
+                      screen: const StartOfWeekScreen(),
+                    ),
+                    _buildProfileOption(
+                      context,
+                      icon: Icons.calendar_month,
+                      title: 'Start of Month',
+                      screen: const StartOfMonthScreen(),
+                    ),
+                    const SizedBox(height: 16),
+                    _buildProfileOption(
+                      context,
+                      icon: Icons.help_outline,
+                      title: 'FAQ',
+                      screen: Container(), // Replace with the actual screen
+                    ),
+                    _buildProfileOption(
+                      context,
+                      icon: Icons.contact_mail,
+                      title: 'Contact Us',
+                      screen: Container(), // Replace with the actual screen
+                    ),
+                    const SizedBox(height: 16),
+
+                    // Log Out button
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: OutlinedButton.icon(
+                        onPressed: () {
+                          AuthService().signOut().then((value) {
+                            Get.offAllNamed(RouteNames.login);
+                          });
+                        },
+                        icon: const Icon(Icons.logout, color: Colors.redAccent),
+                        label: Text(
+                          'Log Out',
+                          style: AppTypography.bodyMedium.copyWith(
+                            color: Colors.redAccent,
+                          ),
+                        ),
+                        style: OutlinedButton.styleFrom(
+                          backgroundColor: Colors.red[50],
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          side: BorderSide(
+                              color: Colors.redAccent.withOpacity(0.2)),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

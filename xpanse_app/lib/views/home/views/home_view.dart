@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
-import 'package:xpanse_app/components/image_icon.dart';
+import 'package:xpanse_app/components/icom_picker.dart';
+import 'package:xpanse_app/components/image_icon.dart' as img;
 import 'package:xpanse_app/controllers/home_controller.dart';
 import 'package:xpanse_app/models/m_money.dart';
 import 'package:xpanse_app/utils/colors.dart';
 import 'package:xpanse_app/utils/format.dart';
 import 'package:xpanse_app/utils/responsive.dart';
+import 'package:xpanse_app/utils/snack_bar.dart';
 import 'package:xpanse_app/utils/spcaing.dart';
 import 'package:xpanse_app/utils/typography.dart';
 
@@ -54,7 +56,7 @@ class HomeView extends GetView<HomeController> {
                 // Wrap the Row with Expanded
                 child: Row(
                   children: [
-                    const CustomIcon(
+                    const img.CustomIcon(
                       imagePath: "assets/images/target.png",
                       size: 40,
                     ),
@@ -298,76 +300,235 @@ class ExpenseItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Row(
-          children: [
-            // Avatar container
-            Container(
-              width: 40,
-              height: 40,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: transaction.type == TransactionType.SENT
-                    ? Colors.red.withOpacity(0.2)
-                    : AppColors.primary.withOpacity(0.2),
-              ),
-              child: ClipOval(
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Image.asset(
-                    transaction.type == TransactionType.RECEIVED
-                        ? 'assets/images/exp-arrow.png'
-                        : 'assets/images/exp-arrow-down.png',
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) {
-                      return Center(
-                        child: Icon(
-                          Icons.person,
-                          color: Colors.grey[600],
-                          size: 24,
-                        ),
-                      );
-                    },
+    return GestureDetector(
+      onLongPress: () {
+        if (transaction.type == TransactionType.SENT) {
+          _showChangeCategory(
+            transaction,
+          );
+        } else {
+          negativeMessage(
+            message: 'You can only change category for expenses',
+          );
+        }
+      },
+      child: Card(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            children: [
+              // Avatar container
+              Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: transaction.type == TransactionType.SENT
+                      ? Colors.red.withOpacity(0.2)
+                      : AppColors.primary.withOpacity(0.2),
+                ),
+                child: ClipOval(
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Image.asset(
+                      transaction.type == TransactionType.RECEIVED
+                          ? 'assets/images/exp-arrow.png'
+                          : 'assets/images/exp-arrow-down.png',
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Center(
+                          child: Icon(
+                            Icons.person,
+                            color: Colors.grey[600],
+                            size: 24,
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ),
               ),
-            ),
 
-            Spacing.horizontal(Spacing.s),
+              Spacing.horizontal(Spacing.s),
 
-            // Name and timestamp
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    transaction.type == TransactionType.RECEIVED
-                        ? transaction.senderName ?? ''
-                        : transaction.recipientName ?? '',
-                    style: AppTypography.bodyMedium,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  Text(
-                    getTimeAgo(transaction.timestamp),
-                    style: AppTypography.caption,
-                  )
-                ],
+              // Name and timestamp
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      transaction.type == TransactionType.RECEIVED
+                          ? transaction.senderName ?? ''
+                          : transaction.recipientName ?? '',
+                      style: AppTypography.bodyMedium,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    Text(
+                      getTimeAgo(transaction.timestamp),
+                      style: AppTypography.caption,
+                    )
+                  ],
+                ),
               ),
-            ),
+              Spacing.horizontal(Spacing.s),
+              // Amount
+              Text(
+                'Rwf ${formatWithCommas(transaction.amount)}',
+                style: AppTypography.bodyMedium.copyWith(
+                  fontSize: 14,
+                  fontWeight: FontWeight.normal,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 
-            // Amount
+  void _showChangeCategory(MoMoTransaction transaction) {
+    final selectedCategory = transaction.category.obs;
+    final HomeController controller = Get.find();
+
+    Get.bottomSheet(
+      Container(
+        padding: const EdgeInsets.all(Spacing.m),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
             Text(
-              'Rwf ${formatWithCommas(transaction.amount)}',
+              'Change Category',
+              style: AppTypography.h3,
+            ),
+            Spacing.vertical(Spacing.s),
+            Text(
+              'Select a category for this transaction',
               style: AppTypography.bodyMedium.copyWith(
-                fontSize: 14,
-                fontWeight: FontWeight.normal,
+                color: Colors.grey,
               ),
             ),
+            Spacing.vertical(Spacing.m),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Obx(() => Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: controller.categories.map((category) {
+                        final isSelected =
+                            selectedCategory.value == category.name;
+
+                        return InkWell(
+                          onTap: () {
+                            selectedCategory.value = category.name;
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.all(Spacing.s),
+                            margin: const EdgeInsets.only(bottom: Spacing.xs),
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: isSelected
+                                    ? AppColors.primary
+                                    : Colors.black.withOpacity(0.1),
+                              ),
+                              borderRadius: BorderRadius.circular(8),
+                              color: isSelected
+                                  ? AppColors.primary.withOpacity(0.1)
+                                  : Colors.transparent,
+                            ),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  icons[category.icon]?.icon,
+                                  color: isSelected
+                                      ? AppColors.primary
+                                      : Colors.grey,
+                                ),
+                                Spacing.horizontal(Spacing.s),
+                                Text(
+                                  category.name,
+                                  style: AppTypography.bodyMedium.copyWith(
+                                    color: isSelected
+                                        ? AppColors.primary
+                                        : Colors.black,
+                                  ),
+                                ),
+                                const Spacer(),
+                                if (isSelected)
+                                  const Icon(
+                                    Icons.check_circle,
+                                    color: AppColors.primary,
+                                  ),
+                              ],
+                            ),
+                          ),
+                        );
+                      }).toList(),
+                    )),
+              ),
+            ),
+            Spacing.vertical(Spacing.m),
+            SizedBox(
+              width: double.infinity,
+              height: 50,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.primary,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                onPressed: () async {
+                  if (selectedCategory.value != null) {
+                    await controller.updateTransaction(
+                      transaction.copyWith(
+                        category: selectedCategory.value,
+                      ),
+                    );
+                    Get.back();
+                    positiveMessage(
+                      message: 'Category updated successfully',
+                    );
+                  } else {
+                    negativeMessage(
+                      message: 'Please select a category',
+                    );
+                  }
+                },
+                // onPressed: selectedCategory.value != null
+                //     ? () async {
+                //         try {
+                //           await controller.updateTransactionCategory(
+                //             transaction,
+                //             selectedCategory.value!,
+                //           );
+                //           Get.back();
+                //           positiveMessage(
+                //               message: 'Category updated successfully');
+                //         } catch (e) {
+                //           negativeMessage(
+                //               message: 'Failed to update category: $e');
+                //         }
+                //       }
+                //     : null,
+                child: Text(
+                  'Save Changes',
+                  style: AppTypography.button.copyWith(
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            )
           ],
         ),
       ),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(Spacing.m),
+          topRight: Radius.circular(Spacing.m),
+        ),
+      ),
+      backgroundColor: Colors.white,
+      isScrollControlled: true,
     );
   }
 }
