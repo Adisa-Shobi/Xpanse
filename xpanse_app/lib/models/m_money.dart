@@ -24,6 +24,8 @@ class MoMoTransaction {
   final String? recipientPhone;
   final String? senderId;
 
+  final String? category;
+
   MoMoTransaction({
     required this.type,
     required this.amount,
@@ -39,6 +41,7 @@ class MoMoTransaction {
     this.recipientPhone,
     this.senderId,
     this.docId,
+    this.category,
   });
 
   factory MoMoTransaction.fromMessage(String message) {
@@ -147,8 +150,9 @@ class MoMoTransaction {
       'recipientName': recipientName,
       'recipientPhone': recipientPhone,
       'senderId': senderId,
-      'id': docId,
+      // 'id': docId,
       'userId': userId,
+      'category': category?.toLowerCase(),
     };
   }
 
@@ -170,6 +174,43 @@ class MoMoTransaction {
       senderId: json['senderId'],
       docId: json['id'],
       userId: json['userId'],
+      category: json['category'],
+    );
+  }
+
+  // Copy with
+  MoMoTransaction copyWith({
+    TransactionType? type,
+    int? amount,
+    DateTime? timestamp,
+    int? balance,
+    String? currency,
+    int? fee,
+    String? senderName,
+    String? senderPhone,
+    String? transactionId,
+    String? recipientName,
+    String? recipientPhone,
+    String? senderId,
+    String? userId,
+    String? category,
+  }) {
+    return MoMoTransaction(
+      type: type ?? this.type,
+      amount: amount ?? this.amount,
+      timestamp: timestamp ?? this.timestamp,
+      balance: balance ?? this.balance,
+      currency: currency ?? this.currency,
+      fee: fee ?? this.fee,
+      senderName: senderName ?? this.senderName,
+      senderPhone: senderPhone ?? this.senderPhone,
+      transactionId: transactionId ?? this.transactionId,
+      recipientName: recipientName ?? this.recipientName,
+      recipientPhone: recipientPhone ?? this.recipientPhone,
+      senderId: senderId ?? this.senderId,
+      userId: userId ?? this.userId,
+      category: category ?? this.category,
+      docId: docId,
     );
   }
 }

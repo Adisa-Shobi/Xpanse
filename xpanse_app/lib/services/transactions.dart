@@ -49,12 +49,13 @@ class TransactionService {
 
       QuerySnapshot querySnapshot = await query.get();
 
-      return querySnapshot.docs
-          .map((doc) => MoMoTransaction.fromJson({
-                'id': doc.id,
-                ...doc.data() as Map<String, dynamic>,
-              }))
-          .toList();
+      return querySnapshot.docs.map((doc) {
+        print(doc.data());
+        return MoMoTransaction.fromJson({
+          ...doc.data() as Map<String, dynamic>,
+          'id': doc.id,
+        });
+      }).toList();
     } catch (e) {
       throw Exception('Failed to get transactions: $e');
     }
@@ -117,6 +118,14 @@ class TransactionService {
           querySnapshot.docs.first.data() as Map<String, dynamic>);
     } catch (e) {
       throw Exception('Failed to get last transaction: $e');
+    }
+  }
+
+  Future<void> updateTransaction(MoMoTransaction transaction) async {
+    try {
+      await _collection.doc(transaction.docId).update(transaction.toJson());
+    } catch (e) {
+      throw Exception('Failed to update transaction: $e');
     }
   }
 
