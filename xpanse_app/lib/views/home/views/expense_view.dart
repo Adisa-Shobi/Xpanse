@@ -244,7 +244,7 @@ class ExpensesView extends GetView<HomeController> {
     List<MaterialColor> _sectionColors = <MaterialColor>[
       Colors.red,
       Colors.blue,
-      Colors.yellow,
+      Colors.indigo,
       Colors.orange,
     ];
     return Obx(
@@ -300,51 +300,58 @@ class ExpensesView extends GetView<HomeController> {
                     children: [
                       // Circular progress indicators
 
-                      ...controller.categories.take(3).map((category) {
-                        final colorIndex = controller.categories
-                            .take(3)
-                            .toList()
-                            .indexOf(category);
-                        // Calculate the cumulative fraction from previous categories
-                        double cumulativeOffset = controller.categories
-                            .takeWhile((c) =>
-                                c !=
-                                category) // Take all categories before current one
-                            .fold(
-                              otherPercentage,
-                              (sum, prevCategory) =>
-                                  sum +
-                                  prevCategory.getFraction(
-                                      controller.transactions.where((t) {
-                                        final now = DateTime.now();
-                                        return t.timestamp.isAfter(DateTime(
-                                                now.year, now.month, 1)) &&
-                                            t.type.toString() ==
-                                                TransactionType.SENT.toString();
-                                      }).toList(),
-                                      controller.monthlyExenditure.value),
-                            );
+                      ...controller.categories
+                          .take(3)
+                          .map((category) {
+                            final colorIndex = controller.categories
+                                .take(3)
+                                .toList()
+                                .indexOf(category);
+                            // Calculate the cumulative fraction from previous categories
+                            double cumulativeOffset = controller.categories
+                                .takeWhile((c) =>
+                                    c !=
+                                    category) // Take all categories before current one
+                                .fold(
+                                  otherPercentage,
+                                  (sum, prevCategory) =>
+                                      sum +
+                                      prevCategory.getFraction(
+                                          controller.transactions.where((t) {
+                                            final now = DateTime.now();
+                                            return t.timestamp.isAfter(DateTime(
+                                                    now.year, now.month, 1)) &&
+                                                t.type.toString() ==
+                                                    TransactionType.SENT
+                                                        .toString();
+                                          }).toList(),
+                                          controller.monthlyExenditure.value),
+                                );
 
-                        return SizedBox(
-                          width: 100,
-                          height: 100,
-                          child: CircularProgressIndicator(
-                            value: cumulativeOffset +
-                                category.getFraction(
-                                    controller.transactions.where((t) {
-                                      final now = DateTime.now();
-                                      return t.timestamp.isAfter(DateTime(
-                                              now.year, now.month, 1)) &&
-                                          t.type.toString() ==
-                                              TransactionType.SENT.toString();
-                                    }).toList(),
-                                    controller.monthlyExenditure.value),
-                            strokeWidth: 8,
-                            backgroundColor: Colors.transparent,
-                            color: _sectionColors[colorIndex],
-                          ),
-                        );
-                      }),
+                            return SizedBox(
+                              width: 100,
+                              height: 100,
+                              child: CircularProgressIndicator(
+                                value: cumulativeOffset +
+                                    category.getFraction(
+                                        controller.transactions.where((t) {
+                                          final now = DateTime.now();
+                                          return t.timestamp.isAfter(DateTime(
+                                                  now.year, now.month, 1)) &&
+                                              t.type.toString() ==
+                                                  TransactionType.SENT
+                                                      .toString();
+                                        }).toList(),
+                                        controller.monthlyExenditure.value),
+                                strokeWidth: 8,
+                                backgroundColor: Colors.transparent,
+                                color: _sectionColors[colorIndex % 4],
+                              ),
+                            );
+                          })
+                          .toList()
+                          .reversed
+                          .toList(),
 
                       SizedBox(
                         width: 100,
