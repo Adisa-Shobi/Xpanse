@@ -50,7 +50,6 @@ class TransactionService {
       QuerySnapshot querySnapshot = await query.get();
 
       return querySnapshot.docs.map((doc) {
-        print(doc.data());
         return MoMoTransaction.fromJson({
           ...doc.data() as Map<String, dynamic>,
           'id': doc.id,

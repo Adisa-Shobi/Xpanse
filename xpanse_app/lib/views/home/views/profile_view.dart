@@ -63,13 +63,13 @@ class ProfileView extends GetWidget<HomeController> {
                       context,
                       icon: Icons.calendar_today,
                       title: 'Start of Week',
-                      screen: const StartOfWeekScreen(),
+                      screen: StartOfWeekScreen(),
                     ),
                     _buildProfileOption(
                       context,
                       icon: Icons.calendar_month,
                       title: 'Start of Month',
-                      screen: const StartOfMonthScreen(),
+                      screen: StartOfMonthScreen(),
                     ),
                     const SizedBox(height: 16),
                     _buildProfileOption(

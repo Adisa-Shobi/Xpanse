@@ -88,7 +88,7 @@ class HomeView extends GetView<HomeController> {
               // Remove the Expanded here
               TextButton(
                 onPressed: () {
-                  _showBudgetBottomSheet();
+                  _showBudgetBottomSheet(context);
                 },
                 child: const Text(
                   'Set',
@@ -145,7 +145,7 @@ class HomeView extends GetView<HomeController> {
     );
   }
 
-  _showBudgetBottomSheet() {
+  _showBudgetBottomSheet(BuildContext context) {
     final _formKey = GlobalKey<FormState>();
     final TextEditingController _budgetController = TextEditingController();
     Get.bottomSheet(
@@ -166,10 +166,23 @@ class HomeView extends GetView<HomeController> {
                 decoration: InputDecoration(
                   labelText: 'Set Budget',
                   labelStyle: AppTypography.caption,
-                  border: const UnderlineInputBorder(
+                  border: const OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(8),
+                    ),
                     borderSide: BorderSide(
                       color: Colors.black,
                       width: 1.0,
+                      style: BorderStyle.solid,
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(8),
+                    ),
+                    borderSide: BorderSide(
+                      color: Colors.black.withOpacity(0.1),
+                      width: 1,
                       style: BorderStyle.solid,
                     ),
                   ),
@@ -188,19 +201,34 @@ class HomeView extends GetView<HomeController> {
               ),
             ),
             Spacing.vertical(Spacing.s),
-            ElevatedButton(
-              onPressed: () async {
-                if (_formKey.currentState!.validate()) {
-                  final res = await controller
-                      .updateUserData(controller.userData.value!.copyWith(
-                    budget: int.parse(_budgetController.text),
-                  ));
-                  if (res != null) {
-                    Get.back();
+            SizedBox(
+              width: double.infinity,
+              height: 50,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.primary,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                onPressed: () async {
+                  if (_formKey.currentState!.validate()) {
+                    final res = await controller
+                        .updateUserData(controller.userData.value!.copyWith(
+                      budget: int.parse(_budgetController.text),
+                    ));
+                    if (res != null) {
+                      Navigator.pop(context);
+                    }
                   }
-                }
-              },
-              child: const Text('Save'),
+                },
+                child: Text(
+                  'Save',
+                  style: AppTypography.button.copyWith(
+                    color: Colors.white,
+                  ),
+                ),
+              ),
             )
           ],
         ),
@@ -304,6 +332,7 @@ class ExpenseItem extends StatelessWidget {
       onLongPress: () {
         if (transaction.type == TransactionType.SENT) {
           _showChangeCategory(
+            context,
             transaction,
           );
         } else {
@@ -386,7 +415,7 @@ class ExpenseItem extends StatelessWidget {
     );
   }
 
-  void _showChangeCategory(MoMoTransaction transaction) {
+  void _showChangeCategory(BuildContext context, MoMoTransaction transaction) {
     final selectedCategory = transaction.category.obs;
     final HomeController controller = Get.find();
 
@@ -484,10 +513,10 @@ class ExpenseItem extends StatelessWidget {
                         category: selectedCategory.value,
                       ),
                     );
-                    Get.back();
                     positiveMessage(
                       message: 'Category updated successfully',
                     );
+                    Navigator.pop(context);
                   } else {
                     negativeMessage(
                       message: 'Please select a category',
