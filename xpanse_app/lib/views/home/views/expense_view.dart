@@ -32,7 +32,7 @@ class ExpensesView extends GetView<HomeController> {
               const SizedBox(height: 24),
               _buildExpensesOverview(),
               const SizedBox(height: 24),
-              _buildSetExpensesSection(),
+              _buildSetExpensesSection(context),
             ],
           ),
         ),
@@ -40,7 +40,7 @@ class ExpensesView extends GetView<HomeController> {
     );
   }
 
-  _showBudgetBottomSheet() {
+  _showBudgetBottomSheet(BuildContext context) {
     final _formKey = GlobalKey<FormState>();
     final TextEditingController _categoryNameController =
         TextEditingController();
@@ -133,7 +133,7 @@ class ExpensesView extends GetView<HomeController> {
                         createdAt: DateTime.now(),
                       );
                       controller.createCategory(category).then((v) {
-                        Get.back();
+                        Navigator.pop(context);
                       });
                     }
                   },
@@ -406,7 +406,7 @@ class ExpensesView extends GetView<HomeController> {
     );
   }
 
-  Widget _buildSetExpensesSection() {
+  Widget _buildSetExpensesSection(BuildContext context) {
     return Obx(
       () => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -420,7 +420,7 @@ class ExpensesView extends GetView<HomeController> {
               ),
               TextButton.icon(
                 onPressed: () {
-                  _showBudgetBottomSheet();
+                  _showBudgetBottomSheet(context);
                 },
                 icon: const Icon(
                   Icons.add_circle_outline,

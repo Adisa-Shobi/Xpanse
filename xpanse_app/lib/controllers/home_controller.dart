@@ -102,6 +102,7 @@ class HomeController extends GetxController {
     try {
       await _dataService.updateUserData(user.value.uid, data);
       userData.value = data;
+      positiveMessage(message: 'User data updated successfully');
       return userData.value!;
     } catch (e) {
       Get.snackbar('Error', 'Failed to update user data: $e');
@@ -116,7 +117,6 @@ class HomeController extends GetxController {
   }
 
   Future<void> createCategory(Category category) async {
-    Get.snackbar('', '');
     try {
       await _categoryService.createCategory(category);
       positiveMessage(
@@ -135,8 +135,6 @@ class HomeController extends GetxController {
 
   Future<void> updateTransaction(MoMoTransaction transaction) async {
     try {
-      print(transaction.toJson());
-      print(transaction.docId);
       await _transactionService.updateTransaction(transaction);
       positiveMessage(message: 'Category added to transaction');
       loadTransactions();
