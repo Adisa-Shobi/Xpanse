@@ -83,19 +83,19 @@ class CategoryService {
 }
 
 class Category {
-  final String id;
+  final String? id;
   final String name;
   final String userId;
   final String? icon;
   final DateTime createdAt;
 
   Category({
-    required this.id,
+    this.id,
     required this.name,
     required this.userId,
     this.icon,
-    required this.createdAt,
-  });
+    DateTime? createdAt,
+  }) : createdAt = createdAt ?? DateTime.now();
 
   Map<String, dynamic> toJson() {
     return {
